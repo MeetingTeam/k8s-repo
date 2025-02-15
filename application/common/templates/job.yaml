@@ -19,7 +19,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.job.image }}:{{ .Values.job.imageTag }}"
+        image: "{{ .Values.job.image }}:{{ .Values.job.tag }}"
         imagePullPolicy: {{ .Values.job.pullPolicy }}
         {{- with .Values.job.command }}
         command: 

@@ -23,14 +23,7 @@ rbac:
   #   subjects:
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: false
-  # # Automatically mount a ServiceAccount's API credentials?
-  # automount: false
-  # # Annotations to add to the service account
-  # annotations: {}
-  # # The name of the service account to use.
-  # # If not set and create is true, a name is generated using the fullname template
   # name: ""
 
 initContainers: []
@@ -38,10 +31,18 @@ initContainers: []
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
 
 livenessProbe: {}
 readinessProbe: {}
@@ -60,8 +61,6 @@ pvc:
   # pvName: ""
   # mountPath: /
 
-env: []
-
 job:
   enabled: false
   # annotations:
@@ -71,8 +70,8 @@ job:
   # image: ""
   # pullPolicy: IfNotPresent
   # command: []
-  env: []
-  restartPolicy: OnFailure
+  # env: []
+  # restartPolicy: OnFailure
 
 service:
   type: ClusterIP
