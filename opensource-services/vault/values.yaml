@@ -24,7 +24,7 @@ global:
   # Setting this will disable deployment of a vault server.
   externalVaultAddr: ""
 
-  # If deploying to OpenShift
+  # If deployingF to OpenShift
   openshift: false
 
   # Create PodSecurityPolicy for pods
