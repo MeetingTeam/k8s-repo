@@ -12,6 +12,7 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+# restartPolicy: Always
 
 rbac:
   create: false

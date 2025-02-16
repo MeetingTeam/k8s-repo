@@ -11,9 +11,6 @@ image:
 
 imagePullSecrets: []
 
-rbac:
-  create: false
-
 serviceAccount:
   create: true
 
@@ -44,11 +41,6 @@ readinessProbe:
   periodSeconds: 5
   timeoutSeconds: 5
   failureThreshold: 3
-
-configmap:
-  enabled: false
-
-env: []
 
 pvc:
   enabled: false
@@ -82,8 +74,8 @@ ingress:
   hosts:
     - host: k8s.backend.chatapp.local
       paths:
-        - path: /
-          pathType: ImplementationSpecific
+        - path: /team-service
+          pathType: Prefix
   tls: []
 
 resources: {}
