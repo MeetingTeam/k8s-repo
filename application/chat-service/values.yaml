@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+replicaCount: 1
 
 image:
   repository: hungtran679/mt_chat-service
@@ -22,7 +22,7 @@ podAnnotations:
     {{- with secret "kv/data/chat-service" -}}
     {{ .Data.data.content | base64Decode }}
     {{- end }}
-  vault.hashicorp.com/agent-inject-file-chat-service: "/app/application.properties"
+  vault.hashicorp.com/agent-inject-file-chat-service: "application.properties"
 
 podLabels: {}
 
@@ -45,9 +45,13 @@ readinessProbe:
 pvc:
   enabled: false
 
+env: 
+  - name: CONFIG_PATH
+    value: /vault/secrets/application.properties
+
 service:
   type: ClusterIP
-  port: 8080
+  port: 8082
 
 ingress:
   enabled: true
