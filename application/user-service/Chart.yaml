@@ -1,6 +1,6 @@
 apiVersion: v2
-name: backend
-description: A Helm chart for meetingteam backend
+name: user-service
+description: A Helm chart for meetingteam user service
 type: application
 version: 0.1.0
 appVersion: "1.0"

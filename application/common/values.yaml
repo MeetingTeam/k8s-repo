@@ -53,8 +53,6 @@ configmap:
   # name: ""
   # data:
 
-env: []
-
 pvc:
   enabled: false
   # accessMode: ReadWriteOnce

@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "common.name" . }}
+  name: {{ include "common.name" . }}-job
   labels:
     {{- include "common.labels" . | nindent 4 }}
   {{- with .Values.job.annotations }}
@@ -12,22 +12,30 @@ metadata:
   {{- end }}
 spec:
   template:
+    metadata:
+      {{- with .Values.job.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.job.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.job.image }}:{{ .Values.job.tag }}"
         imagePullPolicy: {{ .Values.job.pullPolicy }}
-        {{- with .Values.job.command }}
-        command: 
+        {{- with .Values.job.args }}
+        args: 
           {{- toYaml . | nindent 10 }}
         {{- end }}
         {{- with .Values.job.env }}
         env:
-          {{- toYaml . | nindent 12}}
+          {{- toYaml . | nindent 10}}
         {{- end}}
       restartPolicy: {{ .Values.job.restartPolicy }}
 {{- end }}

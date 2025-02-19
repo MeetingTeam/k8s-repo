@@ -56,6 +56,10 @@ spec:
               protocol: TCP
             {{- end }}
             {{- end}}
+          {{- with .Values.args }}
+          args: 
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
           {{- with .Values.env }}
           env:
             {{- toYaml . | nindent 12}}
