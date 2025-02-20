@@ -1,18 +1,12 @@
-# Default values for common.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-replicaCount: 1
-
 image:
   repository: nginx
   tag: latest
   pullPolicy: IfNotPresent
+  pullSecrets: []
 
-imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
-# restartPolicy: Always
 
 rbac:
   create: false
@@ -27,26 +21,6 @@ serviceAccount:
   create: false
   # name: ""
 
-initContainers: []
-
-podAnnotations: {}
-podLabels: {}
-
-podSecurityContext:
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 2000
-
-securityContext:
-  runAsUser: 1000
-  runAsNonRoot: true
-  allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
-  capabilities:
-    drop: ["ALL"]
-
-livenessProbe: {}
-readinessProbe: {}
 
 configmap:
   enabled: false
@@ -59,6 +33,41 @@ pvc:
   # storage: 1Gi
   # pvName: ""
   # mountPath: /
+
+app:
+  podAnnotations: {}
+  podLabels: {}
+  
+  replicaCount: 1
+  initContainers: []
+  restartPolicy: Never
+
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 2000
+  
+  securityContext:
+    runAsUser: 1000
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: ["ALL"]
+  
+  # args: 
+  # env:
+  
+  resources: {}
+  
+  livenessProbe: {}
+  readinessProbe: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
 
 job:
   enabled: false
@@ -91,20 +100,8 @@ ingress:
   #         pathType: ImplementationSpecific
   # tls: []
 
-resources: {}
-
-volumes: {}
-
-volumeMounts: {}
-
 autoscaling:
   enabled: false
   # minReplicas: 1
   # maxReplicas: 100
   # targetCPUUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}

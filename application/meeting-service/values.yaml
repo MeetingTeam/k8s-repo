@@ -1,9 +1,3 @@
-# Default values for common.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-replicaCount: 1
-
 image:
   repository: hungtran679/mt_meeting-service
   tag: "latest"
@@ -14,40 +8,41 @@ imagePullSecrets: []
 serviceAccount:
   create: true
 
-podAnnotations:
-  vault.hashicorp.com/agent-inject: "true"
-  vault.hashicorp.com/role: "meeting-service"
-  vault.hashicorp.com/agent-inject-secret-meeting-service: "kv/data/meeting-service"
-  vault.hashicorp.com/agent-inject-template-meeting-service: |
-    {{- with secret "kv/data/meeting-service" -}}
-    {{ .Data.data.content }}
-    {{- end }}
-  vault.hashicorp.com/agent-inject-file-meeting-service: "application.properties"
-
-podLabels: {}
-
 pvc:
   enabled: false
 
-env: 
-  - name: CONFIG_PATH
-    value: /vault/secrets/application.properties
+app:
+  replicaCount: 1
+  podAnnotations:
+    vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/role: "meeting-service"
+    vault.hashicorp.com/agent-inject-secret-meeting-service: "kv/data/meeting-service"
+    vault.hashicorp.com/agent-inject-template-meeting-service: |
+      {{- with secret "kv/data/meeting-service" -}}
+      {{ .Data.data.content }}
+      {{- end }}
+    vault.hashicorp.com/agent-inject-file-meeting-service: "application.properties"
+  
+  env: 
+    - name: CONFIG_PATH
+      value: /vault/secrets/application.properties
 
-livenessProbe:
-  tcpSocket:
-    port: 8083
-  initialDelaySeconds: 5
-  periodSeconds: 30
-  timeoutSeconds: 5
-  failureThreshold: 3
+  resources: {}
 
-readinessProbe:
-  tcpSocket:
-    port: 8083
-  initialDelaySeconds: 5
-  periodSeconds: 5
-  timeoutSeconds: 5
-  failureThreshold: 3
+  livenessProbe:
+    tcpSocket:
+      port: 8083
+    initialDelaySeconds: 5
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readinessProbe:
+    tcpSocket:
+      port: 8083
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 5
+    failureThreshold: 3
 
 service:
   type: ClusterIP
@@ -68,13 +63,5 @@ ingress:
           pathType: Prefix
   tls: []
 
-resources: {}
-
 autoscaling:
   enabled: false
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}

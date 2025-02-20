@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-      {{- with .Values.job.imagePullSecrets }}
+      {{- with .Values.job.image.pullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -27,8 +27,8 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.job.image }}:{{ .Values.job.tag }}"
-        imagePullPolicy: {{ .Values.job.pullPolicy }}
+        image: "{{ .Values.job.image.repository }}:{{ .Values.job.image.tag }}"
+        imagePullPolicy: {{ .Values.job.image.pullPolicy }}
         {{- with .Values.job.args }}
         args: 
           {{- toYaml . | nindent 10 }}
