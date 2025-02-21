@@ -10,7 +10,7 @@ pvc:
   enabled: false
 
 app:
-  replicaCount: 1
+  replicaCount: 2
 
   podAnnotations:
     vault.hashicorp.com/agent-inject: "true"
@@ -51,15 +51,13 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-          if ($request_uri ~* "/private") {
-            return 404;
-          }
+    nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - host: k8s.backend.chatapp.local
       paths:
-        - path: /websocket-service
-          pathType: Prefix
+      paths:
+        - path: "/websocket-service/(?!.*/private/).*"
+          pathType: ImplementationSpecific
   tls: []
 
 autoscaling:

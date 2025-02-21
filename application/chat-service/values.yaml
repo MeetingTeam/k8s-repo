@@ -53,15 +53,12 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    nginx.ingress.kubernetes.io/server-snippet: |
-          if ($request_uri ~* "/private") {
-            return 404;
-          }
+    nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - host: k8s.backend.chatapp.local
       paths:
-        - path: /chat-service
-          pathType: Prefix
+        - path: "/chat-service/(?!.*/private/).*"
+          pathType: ImplementationSpecific
   tls: []
 
 autoscaling:
