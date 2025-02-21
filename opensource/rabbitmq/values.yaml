@@ -1,0 +1,80 @@
+image:
+  repository: "rabbitmq"
+  tag: latest
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount: 
+  annotations: {}
+
+rbac: 
+  annotations: {}
+
+configmap:
+  additionalData: {}
+
+pvcData:
+  accessModes: ["ReadWriteOnce"]
+  storage: 500Mi
+  storageClassName: standard
+
+server:
+  podAnnotations: {}
+  podLabels: {}
+
+  podSecurityContext: {}
+  securityContext:
+    fsGroup: 999
+    runAsUser: 999
+    runAsGroup: 999
+  
+  replicaCount: 1
+
+  initContainers:
+      image: busybox
+      tag: 1.32.0
+
+  env: []
+
+  resources: {}
+
+  readinessProbe:
+    exec:
+      command: ["rabbitmq-diagnostics", "ping", "--quiet"]
+    initialDelaySeconds: 20
+    periodSeconds: 20
+    timeoutSeconds: 10
+  livenessProbe:
+    exec:
+      command: ["rabbitmq-diagnostics", "check_running", "--quiet"]
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+service:
+  type: ClusterIP
+  ports:
+    amqp: 5672
+    manager: 15672
+
+ingress:
+  enabled: false
+  # className: "nginx"
+  # annotations: {}
+  # hosts:
+  #   - host: rabbitmq.local
+  #     paths:
+  #       - path: /
+  #         pathType: ImplementationSpecific
+  #         port: 15672
+  # tls: []

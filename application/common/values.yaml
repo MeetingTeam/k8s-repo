@@ -1,15 +1,10 @@
-# Default values for common.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-replicaCount: 1
-
 image:
   repository: nginx
   tag: latest
   pullPolicy: IfNotPresent
+  pullSecrets: []
 
-imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
 
@@ -23,35 +18,14 @@ rbac:
   #   subjects:
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: false
-  # # Automatically mount a ServiceAccount's API credentials?
-  # automount: false
-  # # Annotations to add to the service account
-  # annotations: {}
-  # # The name of the service account to use.
-  # # If not set and create is true, a name is generated using the fullname template
   # name: ""
 
-initContainers: []
-
-podAnnotations: {}
-podLabels: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-
-livenessProbe: {}
-readinessProbe: {}
 
 configmap:
   enabled: false
   # name: ""
   # data:
-
-env: []
 
 pvc:
   enabled: false
@@ -60,7 +34,40 @@ pvc:
   # pvName: ""
   # mountPath: /
 
-env: []
+app:
+  podAnnotations: {}
+  podLabels: {}
+  
+  replicaCount: 1
+  initContainers: []
+  restartPolicy: Never
+
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 2000
+  
+  securityContext:
+    runAsUser: 1000
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: ["ALL"]
+  
+  # args: 
+  # env:
+  
+  resources: {}
+  
+  livenessProbe: {}
+  readinessProbe: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
 
 job:
   enabled: false
@@ -71,8 +78,8 @@ job:
   # image: ""
   # pullPolicy: IfNotPresent
   # command: []
-  env: []
-  restartPolicy: OnFailure
+  # env: []
+  # restartPolicy: OnFailure
 
 service:
   type: ClusterIP
@@ -93,20 +100,8 @@ ingress:
   #         pathType: ImplementationSpecific
   # tls: []
 
-resources: {}
-
-volumes: {}
-
-volumeMounts: {}
-
 autoscaling:
   enabled: false
   # minReplicas: 1
   # maxReplicas: 100
   # targetCPUUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
