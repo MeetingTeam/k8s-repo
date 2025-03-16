@@ -1,0 +1,101 @@
+controller:
+  installPlugins: []
+    # - kubernetes:4296.v20a_7e4d77cf6
+    # - workflow-aggregator:600.vb_57cdd26fdd7
+    # - git:5.6.0
+    # - configuration-as-code:1897.v79281e066ea_7
+    # - docker: 1.7.0
+  ingress:
+    enabled: true
+    hostName: jenkins.local
+    path: /
+    ingressClassName: "nginx"
+
+agent:
+  podTemplates:
+    springboot: |
+      - name: springboot
+        namespace: jenkins
+        label: jenkins-maven
+        yaml: |
+          apiVersion: v1
+          kind: Pod
+          spec:
+            containers:
+              - name: maven
+                image: maven:3.9.6-eclipse-temurin-18-alpine
+                command:
+                  - sleep
+                  - infinity
+                tty: true
+                volumeMounts:
+                  - name: maven-repo
+                    mountPath: /root/.m2
+              - name: kaniko
+                image: gcr.io/kaniko-project/executor:debug
+                command:
+                  - sleep
+                  - infinity
+                tty: true   
+                volumeMounts:
+                  - name: kaniko-cache
+                    mountPath: /cache
+            volumes:
+              - name: maven-repo
+                persistentVolumeClaim:
+                  claimName: maven-pvc
+              - name: kaniko-cache
+                persistentVolumeClaim:
+                  claimName: kaniko-cache-pvc
+    
+    nodejs: |
+      - name: nodejs
+        namespace: jenkins
+        label: jenkins-nodejs
+        yaml: |
+          apiVersion: v1
+          kind: Pod
+          spec:
+            containers:
+              - name: nodejs
+                image: 'node:18-alpine'
+                command:
+                  - sleep
+                  - infinity
+                tty: true
+                volumeMounts:
+                  - name: node-modules
+                    mountPath: /home/jenkins/agent/node_modules
+              - name: kaniko
+                image: gcr.io/kaniko-project/executor:debug
+                command:
+                  - sleep
+                  - infinity
+                tty: true   
+                volumeMounts:
+                  - name: kaniko-cache
+                    mountPath: /cache
+            volumes:
+              - name: node-modules
+                persistentVolumeClaim:
+                  claimName: node-modules-pvc
+              - name: kaniko-cache
+                persistentVolumeClaim:
+                  claimName: kaniko-cache-pvc
+templateVpc:
+  enabled: true
+  vpcs:
+    - name: maven-pvc
+      accessModes:
+        - ReadWriteOnce
+      storage: 1Gi
+    - name: node-modules-pvc
+      accessModes:
+        - ReadWriteOnce
+      storage: 1Gi
+    - name: kaniko-cache-pvc
+      accessModes:
+        - ReadWriteOnce
+      storage: 1Gi
+
+
