@@ -1,3 +1,0 @@
-pvc:
-  enabled: true
-  storageClassName: standard
