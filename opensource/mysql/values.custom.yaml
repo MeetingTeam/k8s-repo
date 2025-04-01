@@ -1,15 +1,3 @@
-secret:
-  enabled: true
-  data:
-    DB_PASS:  dHJhbnRpZW5odW5nLjEy
-
-env:
-  - name: MYSQL_ROOT_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: mysql
-        key: DB_PASS
-
 pvc:
   enabled: true
   storageClassName: standard
