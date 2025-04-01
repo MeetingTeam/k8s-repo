@@ -11,6 +11,12 @@ controller:
     path: /
     ingressClassName: "nginx"
 
+persistence:
+  enabled: true
+  accessMode: "ReadWriteOnce"
+  storageClass:
+  size: "1Gi"
+
 agent:
   podTemplates:
     springboot: |
@@ -40,7 +46,7 @@ agent:
                   - infinity
                 tty: true
               - name: trivy
-                image: aquasec/trivy:latest
+                image: aquasec/trivy
                 command:
                   - sleep
                   - infinity
@@ -75,12 +81,9 @@ agent:
                   - sleep
                   - infinity
                 tty: true
-                env:
-                  - name: NODE_PATH
-                    value: "/root/node_modules"
                 volumeMounts:
-                  - name: node-modules
-                    mountPath: /root/node_modules
+                  - name: npm-cache
+                    mountPath: /root/.npm
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
@@ -88,7 +91,7 @@ agent:
                   - infinity
                 tty: true
               - name: trivy
-                image: aquasec/trivy:latest
+                image: aquasec/trivy
                 command:
                   - sleep
                   - infinity
@@ -97,9 +100,9 @@ agent:
                   - name: trivy-cache
                     mountPath: /root/.cache/trivy
             volumes:
-              - name: node-modules
+              - name: npm-cache
                 persistentVolumeClaim:
-                  claimName: node-modules-pvc
+                  claimName: npm-cache-pvc
               - name: sonar-cache
                 persistentVolumeClaim:
                   claimName: sonar-cache-pvc        
@@ -114,7 +117,7 @@ templateVpc:
       accessModes:
         - ReadWriteOnce
       storage: 1Gi
-    - name: node-modules-pvc
+    - name: npm-cache-pvc
       accessModes:
         - ReadWriteOnce
       storage: 1Gi

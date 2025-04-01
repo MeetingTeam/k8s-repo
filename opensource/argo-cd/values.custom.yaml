@@ -1,0 +1,14 @@
+server: 
+  service:
+    type: NodePort
+    nodePortHttp: 30081
+  resources: {}
+  ingress:
+    enabled: false
+    # ingressClassName: "nginx"
+    # https: false
+    # hosts:
+    #   - argocd.local
+    # paths:
+    #   - /
+    # pathType: Prefix

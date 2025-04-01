@@ -12,7 +12,7 @@ serviceAccount:
   annotations: {}
 
 rbac: 
-  annotations: {}
+  enabled: true
 
 configmap:
   additionalData: {}

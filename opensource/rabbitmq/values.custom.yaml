@@ -5,6 +5,9 @@ pvcData:
 serviceAccount:
   enabled: true
 
+rbac: 
+  enabled: false
+
 server:
   podAnnotations:
     vault.hashicorp.com/agent-inject: "true"
