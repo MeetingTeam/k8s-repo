@@ -1,10 +1,10 @@
 controller:
   installPlugins: []
     # - kubernetes:4296.v20a_7e4d77cf6
-    # - workflow-aggregator:600.vb_57cdd26fdd7
+    # - pipeline:600.vb_57cdd26fdd7
     # - git:5.6.0
     # - configuration-as-code:1897.v79281e066ea_7
-    # - docker: 1.7.0
+    # sonarqube scanner plugin
   ingress:
     enabled: true
     hostName: jenkins.local
@@ -23,7 +23,7 @@ agent:
           spec:
             containers:
               - name: maven
-                image: maven:3.9.6-eclipse-temurin-18-alpine
+                image: maven:3.9.6-eclipse-temurin-17-alpine
                 command:
                   - sleep
                   - infinity
@@ -31,22 +31,33 @@ agent:
                 volumeMounts:
                   - name: maven-repo
                     mountPath: /root/.m2
+                  - name: sonar-cache
+                    mountPath: /root/.sonar/cache
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
                   - sleep
                   - infinity
-                tty: true   
+                tty: true
+              - name: trivy
+                image: aquasec/trivy:latest
+                command:
+                  - sleep
+                  - infinity
+                tty: true
                 volumeMounts:
-                  - name: kaniko-cache
-                    mountPath: /cache
+                  - name: trivy-cache
+                    mountPath: /root/.cache/trivy
             volumes:
               - name: maven-repo
                 persistentVolumeClaim:
                   claimName: maven-pvc
-              - name: kaniko-cache
+              - name: sonar-cache
                 persistentVolumeClaim:
-                  claimName: kaniko-cache-pvc
+                  claimName: sonar-cache-pvc        
+              - name: trivy-cache
+                persistentVolumeClaim:
+                  claimName: trivy-cache-pvc     
     
     nodejs: |
       - name: nodejs
@@ -56,6 +67,7 @@ agent:
           apiVersion: v1
           kind: Pod
           spec:
+            serviceAccountName: jenkins
             containers:
               - name: nodejs
                 image: 'node:18-alpine'
@@ -63,25 +75,38 @@ agent:
                   - sleep
                   - infinity
                 tty: true
+                env:
+                  - name: NODE_PATH
+                    value: "/root/node_modules"
                 volumeMounts:
                   - name: node-modules
-                    mountPath: /home/jenkins/agent/node_modules
+                    mountPath: /root/node_modules
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
                   - sleep
                   - infinity
-                tty: true   
+                tty: true
+              - name: trivy
+                image: aquasec/trivy:latest
+                command:
+                  - sleep
+                  - infinity
+                tty: true
                 volumeMounts:
-                  - name: kaniko-cache
-                    mountPath: /cache
+                  - name: trivy-cache
+                    mountPath: /root/.cache/trivy
             volumes:
               - name: node-modules
                 persistentVolumeClaim:
                   claimName: node-modules-pvc
-              - name: kaniko-cache
+              - name: sonar-cache
                 persistentVolumeClaim:
-                  claimName: kaniko-cache-pvc
+                  claimName: sonar-cache-pvc        
+              - name: trivy-cache
+                persistentVolumeClaim:
+                  claimName: trivy-cache-pvc  
+
 templateVpc:
   enabled: true
   vpcs:
@@ -93,7 +118,11 @@ templateVpc:
       accessModes:
         - ReadWriteOnce
       storage: 1Gi
-    - name: kaniko-cache-pvc
+    - name: sonar-cache-pvc
+      accessModes:
+        - ReadWriteOnce
+      storage: 1Gi
+    - name: trivy-cache-pvc
       accessModes:
         - ReadWriteOnce
       storage: 1Gi
