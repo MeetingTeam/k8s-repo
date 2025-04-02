@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "mysql.name" -}}
+{{- define "mongodb.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "mysql.fullname" -}}
+{{- define "mongodb.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "mysql.chart" -}}
+{{- define "mongodb.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
-mysql labels
+mongodb labels
 */}}
-{{- define "mysql.labels" -}}
-helm.sh/chart: {{ include "mysql.chart" . }}
-{{ include "mysql.selectorLabels" . }}
+{{- define "mongodb.labels" -}}
+helm.sh/chart: {{ include "mongodb.chart" . }}
+{{ include "mongodb.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "mysql.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "mysql.name" . }}
+{{- define "mongodb.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "mongodb.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "mysql.serviceAccountName" -}}
+{{- define "mongodb.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "mysql.name" .) .Values.serviceAccount.name }}
+{{- default (include "mongodb.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -64,6 +64,6 @@ Create the name of the service account to use
 {{/*
 Create the headless service name
 */}}
-{{- define "mysql.headlessServiceName" -}}
-{{ include "mysql.name" . }}-headless
+{{- define "mongodb.headlessServiceName" -}}
+{{ include "mongodb.name" . }}-headless
 {{- end }}

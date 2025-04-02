@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       {{- include "rabbitmq.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "rabbitmq.name" . }}-headless
+  serviceName: {{ include "rabbitmq.headlessServiceName" . }}
   volumeClaimTemplates:
   - metadata:
       name: {{ include "rabbitmq.name" . }}-data

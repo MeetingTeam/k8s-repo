@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "mysql.name" . }}
+  name: {{ include "mongodb.name" . }}
   labels:
-    {{- include "mysql.labels" . | nindent 4 }}
+    {{- include "mongodb.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "mysql.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "mysql.headlessServiceName" . }}
+      {{- include "mongodb.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "mongodb.headlessServiceName" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,7 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "mysql.labels" . | nindent 8 }}
+        {{- include "mongodb.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -26,7 +26,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "mysql.serviceAccountName" . }}
+      serviceAccountName: {{ include "mongodb.serviceAccountName" . }}
       {{- with .Values.initContainers }}
       initContainers: 
         {{ toYaml . | nindent 8 }}
@@ -40,7 +40,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: mysql
+            - name: mongodb
               containerPort: {{ .Values.service.port }}
               protocol: TCP
               {{- if .Values.service.additionalPorts }}
@@ -68,7 +68,7 @@ spec:
         {{- if .Values.pvc.enabled }}
         - name: {{ .Values.pvc.pvName }}
           persistentVolumeClaim:
-            claimName: {{ include "mysql.name" . }}
+            claimName: {{ include "mongodb.name" . }}
         {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
