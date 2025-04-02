@@ -25,8 +25,11 @@ configmap:
 
 secret:
   enabled: false
+  # data:
+  #   DB_USER:  cm9vdA==
+  #   DB_PASS:  S29iaWV0LjEyMwo=
 
-env:
+env: {}
   # - name: MYSQL_DATABASE
   #   valueFrom:
   #     configMapKeyRef:
