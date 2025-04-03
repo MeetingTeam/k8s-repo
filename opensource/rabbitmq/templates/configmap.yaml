@@ -13,6 +13,3 @@ data:
     cluster_formation.k8s.service_name = {{ include "rabbitmq.name" . }}-headless
     cluster_formation.k8s.hostname_suffix = .{{ include "rabbitmq.name" . }}-headless.{{ .Release.Namespace }}.svc.cluster.local
     queue_master_locator=min-masters
-  {{- with .Values.configmap.additionalData }}
-  {{ toYaml . | nindent 2 }}
-  {{- end }}

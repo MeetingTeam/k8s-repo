@@ -1,9 +1,5 @@
 pvcData:
-    storage: 125Mi
     storageClassName: standard
-
-serviceAccount:
-  enabled: true
 
 server:
   podAnnotations:
@@ -15,19 +11,22 @@ server:
       {{- with secret "kv/data/rabbitmq" -}}
       RABBITMQ_DEFAULT_USER={{ .Data.data.user }}
       RABBITMQ_DEFAULT_PASS={{ .Data.data.pass }}
-      RABBITMQ_ERLANG_COOKIE={{ .Data.data.erlangCookie }}
       {{- end }}
-    vault.hashicorp.com/agent-inject-file-rabbitmq: "rabbitmq-secret.conf"
+    vault.hashicorp.com/agent-inject-file-rabbitmq: "rabbitmq-secret.env"
   
   replicaCount: 1
 
+  env:
+    - name: RABBITMQ_ERLANG_COOKIE
+      value: "meetingteam"
+  
   args: 
     - sh
     - -c
     - |
       cp /tmp/rabbitmq/rabbitmq.conf /etc/rabbitmq/rabbitmq.conf && echo '' >> /etc/rabbitmq/rabbitmq.conf;
       cp /tmp/rabbitmq/enabled_plugins /etc/rabbitmq/enabled_plugins;
-      source /vault/secrets/rabbitmq-secret.conf;
+      export $(cat /vault/secrets/rabbitmq-secret.env);
       exec rabbitmq-server
 
 ingress:

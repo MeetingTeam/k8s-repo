@@ -31,8 +31,6 @@ pvc:
   enabled: false
   # accessMode: ReadWriteOnce
   # storage: 1Gi
-  # pvName: ""
-  # mountPath: /
 
 app:
   podAnnotations: {}
@@ -59,6 +57,9 @@ app:
   # env:
   
   resources: {}
+
+  volumes: {}
+  volumeMounts: {}
   
   livenessProbe: {}
   readinessProbe: {}

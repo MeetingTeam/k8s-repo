@@ -50,16 +50,7 @@ service:
   port: 8082
 
 ingress:
-  enabled: true
-  className: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-  hosts:
-    - host: k8s.backend.chatapp.local
-      paths:
-        - path: "/chat-service/(?!.*/private/).*"
-          pathType: ImplementationSpecific
-  tls: []
+  enabled: false
 
 autoscaling:
   enabled: false

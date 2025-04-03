@@ -77,10 +77,9 @@ spec:
           {{- end}}
           resources:
             {{- toYaml .Values.app.resources | nindent 12 }}
-          {{- if .Values.pvc.enabled }}
+          {{- with .Values.app.volumeMounts }}
           volumeMounts:
-            - name: {{ .Values.pvc.pvName }}
-              mountPath: {{ .Values.pvc.mountPath }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.app.livenessProbe}}
           livenessProbe:
@@ -90,11 +89,9 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end}}
-      {{- if .Values.pvc.enabled }}
+      {{- with .Values.app.volumes }}
       volumes:
-        - name: {{ .Values.pvc.pvName }}
-          persistentVolumeClaim:
-            claimName: {{ include "common.name" . }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.app.nodeSelector }}
       nodeSelector:

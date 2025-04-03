@@ -1,0 +1,15 @@
+{{- if .Values.templateVpc.enabled }}
+{{- range .Values.templateVpc.vpcs }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .name }}
+spec:
+  accessModes:
+    {{- toYaml .accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .storage | quote }}
+{{- end }}
+{{- end }}

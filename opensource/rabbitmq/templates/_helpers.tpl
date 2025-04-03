@@ -56,3 +56,10 @@ Create the name of the service account to use
 {{- define "rabbitmq.serviceAccountName" -}}
 {{- default (include "rabbitmq.name" .) .Values.serviceAccount.name }}
 {{- end }}
+
+{{/*
+Create the headless service name
+*/}}
+{{- define "rabbitmq.headlessServiceName" -}}
+{{ include "rabbitmq.name" . }}-headless
+{{- end }}

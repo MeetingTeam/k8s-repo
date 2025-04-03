@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "rabbitmq.name" . }}-headless
+  name: {{ include "rabbitmq.headlessServiceName" . }}
   labels:
     {{- include "rabbitmq.labels" . | nindent 4 }}
 spec:

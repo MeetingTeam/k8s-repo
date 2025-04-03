@@ -54,9 +54,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "common.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
 {{- default (include "common.name" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
 {{- end }}
+
+{{/*
+Create the name of the configmap to use
+*/}}
+{{- define "common.configmapName" -}}
+{{- default (include "common.name" .) .Values.configmap.name }}
 {{- end }}

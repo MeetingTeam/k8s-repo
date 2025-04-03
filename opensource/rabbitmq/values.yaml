@@ -12,14 +12,11 @@ serviceAccount:
   annotations: {}
 
 rbac: 
-  annotations: {}
-
-configmap:
-  additionalData: {}
+  enabled: true
 
 pvcData:
   accessModes: ["ReadWriteOnce"]
-  storage: 500Mi
+  storage: 125Mi
   storageClassName: standard
 
 server:

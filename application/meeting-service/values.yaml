@@ -49,17 +49,7 @@ service:
   port: 8083
 
 ingress:
-  enabled: true
-  className: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-  hosts:
-    - host: k8s.backend.chatapp.local
-      paths:
-      paths:
-        - path: "/meeting-service/(?!.*/private/).*"
-          pathType: ImplementationSpecific
-  tls: []
+  enabled: false
 
 autoscaling:
   enabled: false
