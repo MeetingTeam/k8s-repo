@@ -14,12 +14,9 @@ serviceAccount:
 rbac: 
   enabled: true
 
-configmap:
-  additionalData: {}
-
 pvcData:
   accessModes: ["ReadWriteOnce"]
-  storage: 500Mi
+  storage: 125Mi
   storageClassName: standard
 
 server:

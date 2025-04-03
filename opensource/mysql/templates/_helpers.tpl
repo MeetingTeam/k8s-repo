@@ -60,10 +60,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Create the headless service name
-*/}}
-{{- define "mysql.headlessServiceName" -}}
-{{ include "mysql.name" . }}-headless
-{{- end }}

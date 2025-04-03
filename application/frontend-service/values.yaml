@@ -65,15 +65,7 @@ service:
   port: 80
 
 ingress:
-  enabled: true
-  className: "nginx"
-  annotations: {}
-  hosts:
-  - host: k8s.frontend.chatapp.local
-    paths:
-      - path: /
-        pathType: ImplementationSpecific
-  tls: []
+  enabled: false
 
 autoscaling:
   enabled: false

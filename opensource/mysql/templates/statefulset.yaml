@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       {{- include "mysql.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "mysql.headlessServiceName" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
