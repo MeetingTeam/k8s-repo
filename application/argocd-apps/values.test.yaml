@@ -1,0 +1,79 @@
+applications:
+  - name: "user-service"
+    namespace: "default"
+    source:
+      path: "application/user-service"
+      targetRevision: "test"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.test.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+  - name: "team-service"
+    namespace: "default"
+    source:
+      path: "application/team-service"
+      targetRevision: "test"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.test.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+  - name: "chat-service"
+    namespace: "default"
+    source:
+      path: "application/chat-service"
+      targetRevision: "test"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.test.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+  - name: "meeting-service"
+    namespace: "default"
+    source:
+      path: "application/meeting-service"
+      targetRevision: "test"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.test.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+  - name: "websocket-service"
+    namespace: "default"
+    source:
+      path: "application/websocket-service"
+      targetRevision: "test"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.test.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+  - name: "frontend-service"
+    namespace: "default"
+    source:
+      path: "application/frontend-service"
+      targetRevision: "test"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.test.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
