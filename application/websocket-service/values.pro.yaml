@@ -1,0 +1,19 @@
+rollout:
+  enabled: true
+  previewServiceEnabled: true
+  bluegreen:
+    autoPromotionEnabled: false
+    scaleDownDelaySeconds: 30
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  hosts:
+    - host: k8s.backend.chatapp.local
+      paths:
+      paths:
+        - path: "/websocket-service/(?!.*/private/).*"
+          pathType: ImplementationSpecific
+  tls: []

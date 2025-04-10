@@ -1,7 +1,7 @@
-{{- define "common.deployment" -}}
-{{- if not .Values.rollout.enabled }}
-apiVersion: apps/v1
-kind: Deployment
+{{- define "common.rollout" -}}
+{{- if .Values.rollout.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: {{ include "common.name" . }}
   labels:
@@ -17,6 +17,7 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.app.replicaCount }}
   {{- end }}
+  revisionHistoryLimit: {{ .Values.rollout.revisionHistoryLimit | default 2 }}
   selector:
     matchLabels:
       {{- include "common.selectorLabels" . | nindent 6 }}
@@ -106,5 +107,19 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  strategy:
+    {{- if .Values.rollout.bluegreen }}
+    blueGreen:
+      activeService: {{ include "common.name" . }}
+      {{- if .Values.previewServiceEnabled }}
+      previewService: {{ include "common.rolloutPreviewservice" . }}
+      {{- end }}
+      autoPromotionEnabled: {{ .Values.rollout.bluegreen.autoPromotionEnabled }}
+      scaleDownDelaySeconds: {{ .Values.rollout.bluegreen.scaleDownDelaySeconds }}
+    {{- else if .Values.rollout.canary }}
+    canary:
+      steps:
+        {{- toYaml .Values.rollout.canary.steps | nindent 6 }}
+    {{- end }}
 {{- end }}
 {{- end}}

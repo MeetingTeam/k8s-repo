@@ -11,11 +11,11 @@ controller:
     path: /
     ingressClassName: "nginx"
 
-persistence:
-  enabled: true
-  accessMode: "ReadWriteOnce"
-  storageClass:
-  size: "1Gi"
+# persistence:
+#   enabled: true
+#   accessMode: "ReadWriteOnce"
+#   storageClass:
+#   size: "1Gi"
 
 agent:
   podTemplates:
@@ -64,7 +64,6 @@ agent:
               - name: trivy-cache
                 persistentVolumeClaim:
                   claimName: trivy-cache-pvc     
-    
     nodejs: |
       - name: nodejs
         namespace: jenkins
@@ -91,7 +90,7 @@ agent:
                   - infinity
                 tty: true
               - name: trivy
-                image: aquasec/trivy
+                image: 'aquasec/trivy'
                 command:
                   - sleep
                   - infinity
@@ -109,6 +108,23 @@ agent:
               - name: trivy-cache
                 persistentVolumeClaim:
                   claimName: trivy-cache-pvc  
+    k6: |
+      - name: k6
+        namespace: jenkins
+        label: jenkins-k6
+        yaml: |
+          apiVersion: v1
+          kind: Pod
+          spec:
+            serviceAccountName: jenkins
+            containers:
+              - name: k6
+                image: 'hungtran679/k6'
+                command:
+                  - sleep
+                  - infinity
+                tty: true
+
 
 templateVpc:
   enabled: true

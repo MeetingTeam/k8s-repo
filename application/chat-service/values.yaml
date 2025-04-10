@@ -1,7 +1,7 @@
 # Default values for common.
 image:
   repository: hungtran679/mt_chat-service
-  tag: "latest"
+  tag: "v2.60"
   pullPolicy: Always
 
 serviceAccount:
@@ -44,6 +44,9 @@ app:
     periodSeconds: 5
     timeoutSeconds: 5
     failureThreshold: 3
+
+rollout:
+  enabled: false
 
 service:
   type: ClusterIP

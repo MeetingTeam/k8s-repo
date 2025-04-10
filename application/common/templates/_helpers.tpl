@@ -58,6 +58,13 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the argo rollout preview service
+*/}}
+{{- define "common.rolloutPreviewservice" -}}
+{{ include "common.name" . }}-preview
+{{- end }}
+
+{{/*
 Create the name of the configmap to use
 */}}
 {{- define "common.configmapName" -}}
