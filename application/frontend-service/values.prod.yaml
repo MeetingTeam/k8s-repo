@@ -2,16 +2,14 @@ rollout:
   enabled: true
   previewServiceEnabled: true
   bluegreen:
-    autoPromotionEnabled: false
+    autoPromotionEnabled: true
     scaleDownDelaySeconds: 30
 
 ingress:
   enabled: true
   className: "nginx"
-  annotations: {}
   hosts:
-  - host: k8s.frontend.chatapp.local
-    paths:
+  - paths:
       - path: /
         pathType: ImplementationSpecific
   tls: []

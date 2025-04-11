@@ -24,7 +24,6 @@ spec:
     path: {{ .source.path }}
     repoURL: {{ $k8sRepo }}
     targetRevision: {{ .source.targetRevision }}
-    helm:
       {{- toYaml .helm | nindent 6 }}
   {{- with .syncPolicy }}
   syncPolicy:

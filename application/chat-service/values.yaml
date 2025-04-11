@@ -16,6 +16,7 @@ app:
   podLabels: {}
   podAnnotations:
     vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/agent-pre-populate-only: "true"
     vault.hashicorp.com/role: "chat-service"
     vault.hashicorp.com/agent-inject-secret-chat-service: "kv/data/chat-service"
     vault.hashicorp.com/agent-inject-template-chat-service: |

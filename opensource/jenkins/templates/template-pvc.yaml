@@ -1,4 +1,5 @@
 {{- if .Values.templateVpc.enabled }}
+{{- $storageClass := .Values.templateVpc.storageClass -}}
 {{- range .Values.templateVpc.vpcs }}
 ---
 apiVersion: v1
@@ -6,6 +7,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .name }}
 spec:
+  storageClassName: {{ $storageClass | quote }}
   accessModes:
     {{- toYaml .accessModes | nindent 4 }}
   resources:

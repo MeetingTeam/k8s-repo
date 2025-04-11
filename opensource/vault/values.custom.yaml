@@ -5,12 +5,12 @@ server:
   dataStorage:
     enabled: true
     size: 1Gi
-    storageClass: null
-  ingress:
-    enabled: true
-    ingressClassName: "nginx"
-    pathType: Prefix
-    activeService: true
-    hosts:
-      - host: vault.local
-        paths: []
+    storageClass: "ebs-gp3"
+  # ingress:
+  #   enabled: true
+  #   ingressClassName: "nginx"
+  #   pathType: Prefix
+  #   activeService: true
+  #   hosts:
+  #     - host: vault.local
+  #       paths: []

@@ -4,9 +4,7 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
-    - host: k8s.backend.chatapp.local
-      paths:
-      paths:
+    - paths:
         - path: "/team-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
   tls: []

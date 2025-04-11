@@ -72,6 +72,9 @@ job:
   restartPolicy: Never
   args: ["-configFiles=/vault/secrets/flyway.conf"]
 
+rollout:
+  enabled: false
+
 service:
   type: ClusterIP
   port: 8081

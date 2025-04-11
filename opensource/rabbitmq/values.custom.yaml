@@ -1,5 +1,5 @@
 pvcData:
-    storageClassName: standard
+    storageClassName: "ebs-gp3"
 
 server:
   podAnnotations:
@@ -28,14 +28,3 @@ server:
       cp /tmp/rabbitmq/enabled_plugins /etc/rabbitmq/enabled_plugins;
       export $(cat /vault/secrets/rabbitmq-secret.env);
       exec rabbitmq-server
-
-ingress:
-  enabled: true
-  className: "nginx"
-  hosts:
-    - host: rabbitmq.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          port: 15672
-  tls: []

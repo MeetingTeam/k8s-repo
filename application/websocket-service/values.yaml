@@ -43,6 +43,9 @@ app:
     timeoutSeconds: 5
     failureThreshold: 3
 
+rollout:
+  enabled: false
+
 service:
   type: ClusterIP
   port: 8084
