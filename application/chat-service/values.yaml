@@ -1,7 +1,6 @@
-# Default values for common.
 image:
   repository: hungtran679/mt_chat-service
-  tag: "v2.60"
+  tag: "latest"
   pullPolicy: Always
 
 serviceAccount:
