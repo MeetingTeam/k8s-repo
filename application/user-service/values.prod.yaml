@@ -1,18 +1,15 @@
 image:
   tag: "latest"
-
 job:
   enabled: true
   image:
     tag: "latest"
-
 rollout:
   enabled: true
   previewServiceEnabled: true
   bluegreen:
     autoPromotionEnabled: false
     scaleDownDelaySeconds: 30
-
 ingress:
   enabled: true
   className: "nginx"
