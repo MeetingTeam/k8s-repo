@@ -122,6 +122,22 @@ agent:
                   - sleep
                   - infinity
                 tty: true
+    yp: |
+      - name: yp
+        namespace: jenkins
+        label: jenkins-yp
+        yaml: |
+          apiVersion: v1
+          kind: Pod
+          spec:
+            serviceAccountName: jenkins
+            containers:
+              - name: yp
+                image: 'mikefarah/yq'
+                command:
+                  - sleep
+                  - infinity
+                tty: true        
 
 
 templateVpc:

@@ -1,3 +1,11 @@
+image:
+  tag: "latest"
+
+job:
+  enabled: true
+  image:
+    tag: "latest"
+
 rollout:
   enabled: true
   previewServiceEnabled: true
