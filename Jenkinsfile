@@ -22,14 +22,13 @@ pipeline {
                 container('yp') {
                     script {
                         def selectedServices = []
-                        if (params.CHAT_SERVICE) selectedServices << "chat-service"
-                        if (params.MEETING_SERVICE) selectedServices << "meeting-service"
-                        if (params.USER_SERVICE) selectedServices << "user-service"
-                        if (params.TEAM_SERVICE) selectedServices << "team-service"
-                        if (params.WEBSOCKET_SERVICE) selectedServices << "websocket-service"
+                        if(params.CHAT_SERVICE) selectedServices << "chat-service"
+                        if(params.MEETING_SERVICE) selectedServices << "meeting-service"
+                        if(params.USER_SERVICE) selectedServices << "user-service"
+                        if(params.TEAM_SERVICE) selectedServices << "team-service"
+                        if(params.WEBSOCKET_SERVICE) selectedServices << "websocket-service"
 
-                        // Iterate over selected services and copy the image tag
-                        for (chart in selectedServices) {
+                        for(chart in selectedServices) {
                             sh """
                                 chart_dir=${applicationFolder}/${chart}
                                 test_file=\$chart_dir/values.test.yaml
@@ -52,7 +51,7 @@ pipeline {
                     git config --global user.email "jenkins@gmail.com"
                     git config --global user.name "Jenkins"
                     git add .
-                    git commit -m "chore: sync prod image tag(s) from test for ${selectedServices.join(', ')}"
+                    git commit -m "chore: sync prod image tags from test environemnt for ${selectedServices.join(', ')} services"
                     git push origin ${mainBranch}
                 """
             }
