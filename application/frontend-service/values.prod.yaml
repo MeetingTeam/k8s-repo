@@ -1,5 +1,5 @@
 image:
-  tag: "latest"
+  tag: "$image_tag"
 rollout:
   enabled: true
   previewServiceEnabled: true
