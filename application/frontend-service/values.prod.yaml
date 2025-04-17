@@ -1,18 +1,16 @@
 image:
   tag: "latest"
-
 rollout:
   enabled: true
   previewServiceEnabled: true
   bluegreen:
     autoPromotionEnabled: true
     scaleDownDelaySeconds: 30
-
 ingress:
   enabled: true
   className: "nginx"
   hosts:
-  - paths:
-      - path: /
-        pathType: ImplementationSpecific
+    - paths:
+        - path: /
+          pathType: ImplementationSpecific
   tls: []
