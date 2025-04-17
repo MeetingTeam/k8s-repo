@@ -1,5 +1,5 @@
 image:
-  tag: "latest"
+  tag: "v2.0-1-ge90a5e6"
 
 ingress:
   enabled: true
