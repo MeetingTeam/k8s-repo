@@ -1,9 +1,9 @@
 image:
-  tag: "$image_tag"
+  tag: "latest"
 job:
   enabled: true
   image:
-    tag: "$job_image_tag"
+    tag: "latest"
 rollout:
   enabled: true
   previewServiceEnabled: true
