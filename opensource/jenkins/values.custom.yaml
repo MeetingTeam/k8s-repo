@@ -1,4 +1,4 @@
-controller:
+controller: 
   serviceType: NodePort
   nodePort: 30808
   installPlugins: []
@@ -9,7 +9,6 @@ controller:
     # SonarQube Scanner
     # Mail Extension
     # Github
-    # Multibranch Scan Webhook Trigger
 
 persistence:
   enabled: true
@@ -46,7 +45,7 @@ agent:
                   - infinity
                 tty: true
               - name: trivy
-                image: aquasec/trivy
+                image: 'aquasec/trivy'
                 command:
                   - sleep
                   - infinity

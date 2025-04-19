@@ -1,5 +1,5 @@
 image:
-  tag: "latest"
+  imageTag: latest
 
 ingress:
   enabled: true

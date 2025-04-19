@@ -7,7 +7,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.test.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "team-service"
     namespace: "default"
@@ -17,7 +17,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.test.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "chat-service"
     namespace: "default"
@@ -27,7 +27,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.test.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "meeting-service"
     namespace: "default"
@@ -37,7 +37,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.test.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "websocket-service"
     namespace: "default"
@@ -47,7 +47,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.test.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "frontend-service"
     namespace: "default"
@@ -57,5 +57,5 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.test.yaml
+        - values.dev.yaml
     syncPolicy: {}

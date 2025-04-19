@@ -1,10 +1,5 @@
 image:
-  tag: "latest"
-
-job:
-  enabled: true
-  image:
-    tag: "latest"
+  imageTag: latest
 
 ingress:
   enabled: true
@@ -13,6 +8,6 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - paths:
-        - path: "/user-service/(?!.*/private/).*"
+        - path: "/websocket-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
   tls: []

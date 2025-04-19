@@ -1,6 +1,6 @@
 image:
   repository: hungtran679/mt_frontend-service
-  tag: "latest"
+  tag: latest
   pullPolicy: IfNotPresent
 
 serviceAccount:

@@ -1,6 +1,6 @@
 image:
   repository: hungtran679/mt_team-service
-  tag: "latest"
+  tag: latest
   pullPolicy: Always
 
 serviceAccount:
