@@ -1,5 +1,5 @@
 image:
-  tag: "1.0-17"
+  imageTag: latest
 
 ingress:
   enabled: true
@@ -8,6 +8,6 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - paths:
-        - path: "/chat-service/(?!.*/private/).*"
+        - path: "/meeting-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
   tls: []

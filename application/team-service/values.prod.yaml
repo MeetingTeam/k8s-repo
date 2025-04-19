@@ -1,10 +1,10 @@
 image:
-  tag: "latest"
+  imageTag: latest
 
 job:
   enabled: true
   image:
-    tag: "latest"
+    jobImageTag: latest
 
 rollout:
   enabled: true

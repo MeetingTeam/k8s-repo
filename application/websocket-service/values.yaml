@@ -10,7 +10,7 @@ pvc:
   enabled: false
 
 app:
-  replicaCount: 2
+  replicaCount: 1
 
   podAnnotations:
     vault.hashicorp.com/agent-inject: "true"

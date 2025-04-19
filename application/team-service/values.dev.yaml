@@ -1,10 +1,10 @@
 image:
-  tag: "1.0-20"
+  imageTag: latest
 
 job:
   enabled: true
   image:
-    tag: "latest"
+    jobImageTag: latest
 
 ingress:
   enabled: true
@@ -13,6 +13,6 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - paths:
-        - path: "/user-service/(?!.*/private/).*"
+        - path: "/team-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
   tls: []
