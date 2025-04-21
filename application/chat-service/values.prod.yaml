@@ -1,11 +1,16 @@
 image:
   imageTag: latest
 
+app:
+  replicaCount: 1
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: app-node-group
+
 rollout:
   enabled: true
   previewServiceEnabled: true
   bluegreen:
-    autoPromotionEnabled: true
+    autoPromotionEnabled: false
     scaleDownDelaySeconds: 30
 
 ingress:

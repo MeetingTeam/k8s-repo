@@ -1,7 +1,14 @@
 injector:
   enabled: "true"
   defaultVaultAddress: "http://vault.vault.svc.cluster.local:8200"
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: system-node-group
 server:
+  service:
+    type: NodePort
+    nodePort: 30200
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: system-node-group
   dataStorage:
     enabled: true
     size: 1Gi
