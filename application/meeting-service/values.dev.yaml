@@ -1,6 +1,11 @@
 image:
   imageTag: 1.0-707f93a-11
 
+app:
+  replicaCount: 1
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: app-node-group
+
 ingress:
   enabled: true
   className: "nginx"

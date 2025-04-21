@@ -1,8 +1,4 @@
 controller: 
-  serviceType: NodePort
-  nodePort: 30808
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: system-node-group
   installPlugins: []
     # Kubernetes
     # Pipeline
@@ -12,15 +8,19 @@ controller:
     # Mail Extension
     # Github
 
-persistence:
-  enabled: true
-  accessMode: "ReadWriteOnce"
-  storageClass: "ebs-gp3"
-  size: "2Gi"
+  ingress:
+    enabled: true
+    hostName: jenkins.local
+    path: /
+    ingressClassName: "nginx"
+
+# persistence:
+#   enabled: true
+#   accessMode: "ReadWriteOnce"
+#   storageClass: "standard"
+#   size: "1Gi"
 
 agent:
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: system-node-group
   podTemplates:
     springboot: |
       - name: springboot
@@ -98,11 +98,8 @@ agent:
                   - sleep
                   - infinity
                 tty: true
-                volumeMounts:
-                  - name: soanr-cache
-                    mountPath: /opt/sonar-scanner/.sonar/cache
               - name: trivy
-                image: 'aquasec/trivy'
+                image:  'aquasec/trivy'
                 command:
                   - sleep
                   - infinity
@@ -156,7 +153,7 @@ agent:
 
 templateVpc:
   enabled: true
-  storageClass: "ebs-gp3"
+  storageClass: "standard"
   vpcs:
     - name: maven-pvc
       accessModes:

@@ -1,6 +1,11 @@
 image:
   imageTag: 1.0-10
 
+app:
+  replicaCount: 1
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: app-node-group
+
 job:
   enabled: true
   image:

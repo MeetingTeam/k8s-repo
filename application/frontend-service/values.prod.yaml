@@ -5,7 +5,7 @@ rollout:
   enabled: true
   previewServiceEnabled: true
   bluegreen:
-    autoPromotionEnabled: true
+    autoPromotionEnabled: false
     scaleDownDelaySeconds: 30
 
 ingress:
