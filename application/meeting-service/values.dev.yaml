@@ -1,5 +1,5 @@
 image:
-  imageTag: latest
+  imageTag: 1.0-707f93a-11
 
 ingress:
   enabled: true
