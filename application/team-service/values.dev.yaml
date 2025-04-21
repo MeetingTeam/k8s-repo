@@ -1,5 +1,5 @@
 image:
-  imageTag: 1.0-7
+  imageTag: 1.0-8
 
 job:
   enabled: true
