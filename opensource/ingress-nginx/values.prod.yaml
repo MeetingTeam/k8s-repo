@@ -1,7 +1,4 @@
 controller:
-  nodeSelector:
-    kubernetes.io/os: linux
-    eks.amazonaws.com/nodegroup: app-node-group
   service:
     type: LoadBalancer
     annotations:

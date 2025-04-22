@@ -1,8 +1,6 @@
 controller: 
   serviceType: NodePort
   nodePort: 30808
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: system-node-group
   installPlugins: []
     # Kubernetes
     # Pipeline
@@ -10,7 +8,7 @@ controller:
     # Configuration as Code Plugin
     # SonarQube Scanner
     # Mail Extension
-    # Github
+    # Git Branch Source plugin
 
 persistence:
   enabled: true
@@ -19,8 +17,6 @@ persistence:
   size: "2Gi"
 
 agent:
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: system-node-group
   podTemplates:
     springboot: |
       - name: springboot
@@ -99,7 +95,7 @@ agent:
                   - infinity
                 tty: true
                 volumeMounts:
-                  - name: soanr-cache
+                  - name: sonar-cache
                     mountPath: /opt/sonar-scanner/.sonar/cache
               - name: trivy
                 image: 'aquasec/trivy'
@@ -135,23 +131,7 @@ agent:
                 command:
                   - sleep
                   - infinity
-                tty: true
-    yp: |
-      - name: yp
-        namespace: jenkins
-        label: jenkins-yp
-        yaml: |
-          apiVersion: v1
-          kind: Pod
-          spec:
-            serviceAccountName: jenkins
-            containers:
-              - name: yp
-                image: 'mikefarah/yq'
-                command:
-                  - sleep
-                  - infinity
-                tty: true        
+                tty: true     
 
 
 templateVpc:
