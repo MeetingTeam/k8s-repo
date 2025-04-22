@@ -1,5 +1,5 @@
 pvcData:
-    storageClassName: "ebs-gp3"
+  storageClassName: "gp2"
 
 server:
   podAnnotations:
@@ -15,8 +15,6 @@ server:
     vault.hashicorp.com/agent-inject-file-rabbitmq: "rabbitmq-secret.env"
   
   replicaCount: 1
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: app-node-group
 
   env:
     - name: RABBITMQ_ERLANG_COOKIE
