@@ -56,8 +56,8 @@ configmap:
         "MEETING_SERVICE_ENDPOINT": "/meeting-service",
         "WEBSOCKET_SERVICE_ENDPOINT": "/websocket-service",
         "AWS_REGION": "us-east-1",
-        "COGNITO_USER_POOL_ID": "us-east-1_T4Hv9AGL1",
-        "COGNITO_CLIENT_ID": "k4emgbs0ape84ggvlntuhdruh"
+        "COGNITO_USER_POOL_ID": "us-east-1_y30eiJyjf",
+        "COGNITO_CLIENT_ID": "4u22a3844h3m93q0q6b87m4idl"
       };
 
 rollout:
