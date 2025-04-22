@@ -1,10 +1,4 @@
-controller:
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: system-node-group
-
 server: 
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: system-node-group
   service:
     type: NodePort
     nodePortHttp: 30081

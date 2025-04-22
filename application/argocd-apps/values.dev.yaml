@@ -8,7 +8,6 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
-    syncPolicy: {}
   - name: "team-service"
     namespace: "default"
     source:
@@ -18,7 +17,6 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
-    syncPolicy: {}
   - name: "chat-service"
     namespace: "default"
     source:
@@ -28,7 +26,6 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
-    syncPolicy: {}
   - name: "meeting-service"
     namespace: "default"
     source:
@@ -38,7 +35,6 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
-    syncPolicy: {}
   - name: "websocket-service"
     namespace: "default"
     source:
@@ -48,7 +44,6 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
-    syncPolicy: {}
   - name: "frontend-service"
     namespace: "default"
     source:
@@ -58,4 +53,3 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
-    syncPolicy: {}
