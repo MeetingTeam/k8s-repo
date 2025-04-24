@@ -2,29 +2,6 @@ pvcData:
   storageClassName: "gp2"
 
 server:
-  podAnnotations:
-    vault.hashicorp.com/agent-inject: "true"
-    vault.hashicorp.com/agent-pre-populate-only: "true"
-    vault.hashicorp.com/role: "rabbitmq"
-    vault.hashicorp.com/agent-inject-secret-rabbitmq: "kv/data/rabbitmq"
-    vault.hashicorp.com/agent-inject-template-rabbitmq: |
-      {{- with secret "kv/data/rabbitmq" -}}
-      RABBITMQ_DEFAULT_USER={{ .Data.data.user }}
-      RABBITMQ_DEFAULT_PASS={{ .Data.data.pass }}
-      {{- end }}
-    vault.hashicorp.com/agent-inject-file-rabbitmq: "rabbitmq-secret.env"
-  
-  replicaCount: 1
-
   env:
     - name: RABBITMQ_ERLANG_COOKIE
       value: "meetingteam"
-  
-  args: 
-    - sh
-    - -c
-    - |
-      cp /tmp/rabbitmq/rabbitmq.conf /etc/rabbitmq/rabbitmq.conf && echo '' >> /etc/rabbitmq/rabbitmq.conf;
-      cp /tmp/rabbitmq/enabled_plugins /etc/rabbitmq/enabled_plugins;
-      export $(cat /vault/secrets/rabbitmq-secret.env);
-      exec rabbitmq-server
