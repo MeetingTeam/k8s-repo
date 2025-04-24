@@ -7,13 +7,15 @@ controller:
     # Git
     # Configuration as Code Plugin
     # SonarQube Scanner
-    # Mail Extension
-    # Git Branch Source plugin
+    # Github Branch Source
+  # admin:
+  #   username: "admin"
+  #   password:
 
 persistence:
   enabled: true
   accessMode: "ReadWriteOnce"
-  storageClass: "ebs-gp3"
+  storageClass: "gp2"
   size: "2Gi"
 
 agent:
@@ -94,9 +96,6 @@ agent:
                   - sleep
                   - infinity
                 tty: true
-                volumeMounts:
-                  - name: sonar-cache
-                    mountPath: /opt/sonar-scanner/.sonar/cache
               - name: trivy
                 image: 'aquasec/trivy'
                 command:
@@ -109,10 +108,7 @@ agent:
             volumes:
               - name: npm-cache
                 persistentVolumeClaim:
-                  claimName: npm-cache-pvc
-              - name: sonar-cache
-                persistentVolumeClaim:
-                  claimName: sonar-cache-pvc        
+                  claimName: npm-cache-pvc   
               - name: trivy-cache
                 persistentVolumeClaim:
                   claimName: trivy-cache-pvc  
@@ -136,7 +132,7 @@ agent:
 
 templateVpc:
   enabled: true
-  storageClass: "ebs-gp3"
+  storageClass: "gp2"
   vpcs:
     - name: maven-pvc
       accessModes:

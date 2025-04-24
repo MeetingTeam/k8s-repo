@@ -17,7 +17,7 @@ rbac:
 pvcData:
   accessModes: ["ReadWriteOnce"]
   storage: 125Mi
-  storageClassName: standard
+  storageClassName: ""
 
 server:
   podAnnotations: {}

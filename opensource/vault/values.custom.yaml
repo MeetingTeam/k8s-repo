@@ -4,11 +4,11 @@ injector:
 server:
   service:
     type: NodePort
-    nodePort: 30200
+    nodePort: 30082
   dataStorage:
     enabled: true
     size: 1Gi
-    storageClass: "ebs-gp3"
+    storageClass: "gp2"
   # ingress:
   #   enabled: true
   #   ingressClassName: "nginx"
