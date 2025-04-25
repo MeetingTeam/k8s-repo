@@ -1,5 +1,5 @@
 image:
-  imageTag: 1.0-de07a68-5
+  imageTag: 1.0-71fc9f1-1
 
 rollout:
   enabled: true
