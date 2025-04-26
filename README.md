@@ -9,7 +9,7 @@ Dưới đây là các bước hướng dẫn để thêm Helm repository, tìm 
 helm repo add <repo-name> https://<PAT>@raw.githubusercontent.com/MeetingTeam/k8s-repo/main
 ```
 
-## Bước 2: Tìm kiếm tất cả các Charts của Repository
+## Bước 2: Tìm kiếm tất cả các Charts/Tài nguyên của Repository
 
 Để tìm kiếm tất cả các charts có trong repository đã thêm, bạn sử dụng lệnh sau:
 
@@ -19,7 +19,7 @@ helm search repo <repo-name>
 
 Ví dụ: helm search repo devops
 
-## Bước 3: Tải Cấu Hình Mặc Định Của Tài Nguyên
+## Bước 3: Tải Cấu Hình Mặc Định Của Charts/Tài nguyên
 Để lấy cấu hình mặc định của một chart và lưu vào một file cấu hình tùy chỉnh (values.custom.yaml), bạn sử dụng lệnh sau:
 
 ```bash
