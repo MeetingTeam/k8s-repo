@@ -6,7 +6,7 @@ entries:
         - "[Fixed]: ArgoCD application controller metric application label templating"
     apiVersion: v2
     appVersion: v2.2.5
-    created: "2025-04-26T09:43:33.350468383-07:00"
+    created: "2025-04-26T09:50:55.133887589-07:00"
     dependencies:
     - condition: redis-ha.enabled
       name: redis-ha
@@ -28,7 +28,7 @@ entries:
     - name: seanson
     name: argo-cd
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/argo-cd-3.35.4.tgz
+    - packaged-charts/argo-cd-3.35.4.tgz
     version: 3.35.4
   argo-rollouts:
   - annotations:
@@ -40,7 +40,7 @@ entries:
         url: https://argoproj.github.io/argo-helm/pgp_keys.asc
     apiVersion: v2
     appVersion: v1.8.2
-    created: "2025-04-26T09:43:33.357357801-07:00"
+    created: "2025-04-26T09:50:55.138196185-07:00"
     description: A Helm chart for Argo Rollouts
     digest: b985d1f8ef66659e22411d5476d29263f816c17758e12c99022fe45af6b1beb6
     home: https://github.com/argoproj/argo-helm
@@ -55,23 +55,23 @@ entries:
     sources:
     - https://github.com/argoproj/argo-rollouts
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/argo-rollouts-2.39.5.tgz
+    - packaged-charts/argo-rollouts-2.39.5.tgz
     version: 2.39.5
   argocd-apps:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.357950663-07:00"
+    created: "2025-04-26T09:50:55.138379137-07:00"
     description: A Helm chart for argocd crd resources to init applications
     digest: c9830f49a0e0dcd5f9f7b76e57d6e33c4ccba40f579afde354a77a31e5bc4572
     name: argocd-apps
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/argocd-apps-0.1.0.tgz
+    - packaged-charts/argocd-apps-0.1.0.tgz
     version: 0.1.0
   chat-service:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.358641849-07:00"
+    created: "2025-04-26T09:50:55.139124182-07:00"
     dependencies:
     - name: common
       repository: file://../common
@@ -81,23 +81,23 @@ entries:
     name: chat-service
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/chat-service-0.1.0.tgz
+    - packaged-charts/chat-service-0.1.0.tgz
     version: 0.1.0
   common:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.359140344-07:00"
+    created: "2025-04-26T09:50:55.139503081-07:00"
     description: A Helm chart for Kubernetes
     digest: 6f854ee47c4a2d28341a7087adc34d5ad936ed1a813477f02029f4ee8c38802f
     name: common
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/common-0.1.0.tgz
+    - packaged-charts/common-0.1.0.tgz
     version: 0.1.0
   frontend-service:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.359826731-07:00"
+    created: "2025-04-26T09:50:55.140138551-07:00"
     dependencies:
     - name: common
       repository: file://../common
@@ -107,7 +107,7 @@ entries:
     name: frontend-service
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/frontend-service-0.1.0.tgz
+    - packaged-charts/frontend-service-0.1.0.tgz
     version: 0.1.0
   ingress-nginx:
   - annotations:
@@ -117,7 +117,7 @@ entries:
       artifacthub.io/prerelease: "false"
     apiVersion: v2
     appVersion: 1.12.0
-    created: "2025-04-26T09:43:33.363185459-07:00"
+    created: "2025-04-26T09:50:55.143529888-07:00"
     description: Ingress controller for Kubernetes using NGINX as a reverse proxy
       and load balancer
     digest: 2b27461642aee7f250ecb086e42f70285176dbcfcdee15b38591606c1c6bdd17
@@ -136,7 +136,7 @@ entries:
     sources:
     - https://github.com/kubernetes/ingress-nginx
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/ingress-nginx-4.12.0.tgz
+    - packaged-charts/ingress-nginx-4.12.0.tgz
     version: 4.12.0
   jenkins:
   - annotations:
@@ -160,7 +160,7 @@ entries:
           url: https://github.com/jenkinsci/helm-charts/issues
     apiVersion: v2
     appVersion: 2.479.1
-    created: "2025-04-26T09:43:33.369351493-07:00"
+    created: "2025-04-26T09:50:55.148943572-07:00"
     description: 'Jenkins - Build great things at any scale! As the leading open source
       automation server, Jenkins provides over 1800 plugins to support building, deploying
       and automating any project. '
@@ -190,12 +190,12 @@ entries:
     - https://github.com/jenkinsci/configuration-as-code-plugin
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/jenkins-5.7.14.tgz
+    - packaged-charts/jenkins-5.7.14.tgz
     version: 5.7.14
   meeting-service:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.37018164-07:00"
+    created: "2025-04-26T09:50:55.149537363-07:00"
     dependencies:
     - name: common
       repository: file://../common
@@ -205,45 +205,45 @@ entries:
     name: meeting-service
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/meeting-service-0.1.0.tgz
+    - packaged-charts/meeting-service-0.1.0.tgz
     version: 0.1.0
   mongodb:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.37120578-07:00"
+    created: "2025-04-26T09:50:55.14980827-07:00"
     description: A custom MongoDB Helm chart for Kubernetes
     digest: f1ffdbc3b8d029c9dd6f6f6d9e2d93b493a67f1057f3cdeaa2de102be38a88c7
     name: mongodb
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/mongodb-0.1.0.tgz
+    - packaged-charts/mongodb-0.1.0.tgz
     version: 0.1.0
   mysql:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.371519378-07:00"
+    created: "2025-04-26T09:50:55.150058699-07:00"
     description: A MySQL Helm chart for Kubernetes
     digest: 178fa0dde740a06a107c28e59ce3b797e5424f331eae2bfa06b684bb6557ec0c
     name: mysql
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/mysql-0.1.0.tgz
+    - packaged-charts/mysql-0.1.0.tgz
     version: 0.1.0
   rabbitmq:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.371816876-07:00"
+    created: "2025-04-26T09:50:55.150487031-07:00"
     description: A Helm chart for rabbitmq broker
     digest: a18d7f6d0d0566daaa04ee0c7f45e851956e21c931f5d921dbefa8071ee99df3
     name: rabbitmq
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/rabbitmq-0.1.0.tgz
+    - packaged-charts/rabbitmq-0.1.0.tgz
     version: 0.1.0
   team-service:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.372428413-07:00"
+    created: "2025-04-26T09:50:55.151963465-07:00"
     dependencies:
     - name: common
       repository: file://../common
@@ -253,12 +253,12 @@ entries:
     name: team-service
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/team-service-0.1.0.tgz
+    - packaged-charts/team-service-0.1.0.tgz
     version: 0.1.0
   user-service:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.373098019-07:00"
+    created: "2025-04-26T09:50:55.152566113-07:00"
     dependencies:
     - name: common
       repository: file://../common
@@ -268,14 +268,14 @@ entries:
     name: user-service
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/user-service-0.1.0.tgz
+    - packaged-charts/user-service-0.1.0.tgz
     version: 0.1.0
   vault:
   - annotations:
       charts.openshift.io/name: HashiCorp Vault
     apiVersion: v2
     appVersion: 1.18.1
-    created: "2025-04-26T09:43:33.375458676-07:00"
+    created: "2025-04-26T09:50:55.154805786-07:00"
     description: Official HashiCorp Vault Chart
     digest: 7cd637f514b5f1fad5136b98499554ddcef615e2bf464fd021c521bfe0203172
     home: https://www.vaultproject.io
@@ -296,12 +296,12 @@ entries:
     - https://github.com/hashicorp/vault-k8s
     - https://github.com/hashicorp/vault-csi-provider
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/vault-0.29.1.tgz
+    - packaged-charts/vault-0.29.1.tgz
     version: 0.29.1
   websocket-service:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-04-26T09:43:33.378098875-07:00"
+    created: "2025-04-26T09:50:55.15775695-07:00"
     dependencies:
     - name: common
       repository: file://../common
@@ -311,6 +311,6 @@ entries:
     name: websocket-service
     type: application
     urls:
-    - https://raw.githubusercontent.com/MeetingTeam/k8s-repo/main/packaged-charts/packaged-charts/websocket-service-0.1.0.tgz
+    - packaged-charts/websocket-service-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-26T09:43:33.339562721-07:00"
+generated: "2025-04-26T09:50:55.1259667-07:00"
