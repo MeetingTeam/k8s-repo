@@ -1,0 +1,316 @@
+apiVersion: v1
+entries:
+  argo-cd:
+  - annotations:
+      artifacthub.io/changes: |
+        - "[Fixed]: ArgoCD application controller metric application label templating"
+    apiVersion: v2
+    appVersion: v2.2.5
+    created: "2025-04-26T09:09:36.858780961-07:00"
+    dependencies:
+    - condition: redis-ha.enabled
+      name: redis-ha
+      repository: https://dandydeveloper.github.io/charts/
+      version: 4.12.17
+    description: A Helm chart for ArgoCD, a declarative, GitOps continuous delivery
+      tool for Kubernetes.
+    digest: 571104b37f8133478b7ff076a92290fb0a656f6833bdae5e9f0fe944de57b933
+    home: https://github.com/argoproj/argo-helm
+    icon: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
+    keywords:
+    - argoproj
+    - argocd
+    - gitops
+    maintainers:
+    - name: alexec
+    - name: alexmt
+    - name: jessesuen
+    - name: seanson
+    name: argo-cd
+    urls:
+    - argo-cd-3.35.4.tgz
+    version: 3.35.4
+  argo-rollouts:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
+          description: argo-rollouts will re-deploy if changes are made to the argo-rollouts configmap.
+      artifacthub.io/signKey: |
+        fingerprint: 2B8F22F57260EFA67BE1C5824B11F800CD9D2252
+        url: https://argoproj.github.io/argo-helm/pgp_keys.asc
+    apiVersion: v2
+    appVersion: v1.8.2
+    created: "2025-04-26T09:09:36.862451808-07:00"
+    description: A Helm chart for Argo Rollouts
+    digest: b985d1f8ef66659e22411d5476d29263f816c17758e12c99022fe45af6b1beb6
+    home: https://github.com/argoproj/argo-helm
+    icon: https://argoproj.github.io/argo-rollouts/assets/logo.png
+    keywords:
+    - argoproj
+    - argo-rollouts
+    maintainers:
+    - name: argoproj
+      url: https://argoproj.github.io/
+    name: argo-rollouts
+    sources:
+    - https://github.com/argoproj/argo-rollouts
+    urls:
+    - argo-rollouts-2.39.5.tgz
+    version: 2.39.5
+  argocd-apps:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.862752428-07:00"
+    description: A Helm chart for argocd crd resources to init applications
+    digest: c9830f49a0e0dcd5f9f7b76e57d6e33c4ccba40f579afde354a77a31e5bc4572
+    name: argocd-apps
+    type: application
+    urls:
+    - argocd-apps-0.1.0.tgz
+    version: 0.1.0
+  chat-service:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.863501042-07:00"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: 0.1.0
+    description: A Helm chart for meetingteam chat service
+    digest: 5b20eb00208a1e8c0fc2a5351b2b3ac3c5b958e3625b0ba461a38aa4ca0e438f
+    name: chat-service
+    type: application
+    urls:
+    - chat-service-0.1.0.tgz
+    version: 0.1.0
+  common:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.863853939-07:00"
+    description: A Helm chart for Kubernetes
+    digest: 6f854ee47c4a2d28341a7087adc34d5ad936ed1a813477f02029f4ee8c38802f
+    name: common
+    type: application
+    urls:
+    - common-0.1.0.tgz
+    version: 0.1.0
+  frontend-service:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.864491105-07:00"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: 0.1.0
+    description: A Helm chart for Frontend application
+    digest: 83f2886dfb733c62c332e6ee3d83578a5d3bd08d3df0c8aa2f9e01e5030828a3
+    name: frontend-service
+    type: application
+    urls:
+    - frontend-service-0.1.0.tgz
+    version: 0.1.0
+  ingress-nginx:
+  - annotations:
+      artifacthub.io/changes: |
+        - 'CI: Fix chart testing. (#12258)'
+        - Update Ingress-Nginx version controller-v1.12.0
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.12.0
+    created: "2025-04-26T09:09:36.871802691-07:00"
+    description: Ingress controller for Kubernetes using NGINX as a reverse proxy
+      and load balancer
+    digest: 2b27461642aee7f250ecb086e42f70285176dbcfcdee15b38591606c1c6bdd17
+    home: https://github.com/kubernetes/ingress-nginx
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png
+    keywords:
+    - ingress
+    - nginx
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: cpanato
+    - name: Gacko
+    - name: strongjz
+    - name: tao12345666333
+    name: ingress-nginx
+    sources:
+    - https://github.com/kubernetes/ingress-nginx
+    urls:
+    - ingress-nginx-4.12.0.tgz
+    version: 4.12.0
+  jenkins:
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/changes: |
+        - Update `kubernetes` to version `4296.v20a_7e4d77cf6`
+      artifacthub.io/images: |
+        - name: jenkins
+          image: docker.io/jenkins/jenkins:2.479.1-jdk17
+        - name: k8s-sidecar
+          image: docker.io/kiwigrid/k8s-sidecar:1.28.0
+        - name: inbound-agent
+          image: jenkins/inbound-agent:3273.v4cfe589b_fd83-1
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+        - name: Jenkins
+          url: https://www.jenkins.io/
+        - name: support
+          url: https://github.com/jenkinsci/helm-charts/issues
+    apiVersion: v2
+    appVersion: 2.479.1
+    created: "2025-04-26T09:09:36.876551254-07:00"
+    description: 'Jenkins - Build great things at any scale! As the leading open source
+      automation server, Jenkins provides over 1800 plugins to support building, deploying
+      and automating any project. '
+    digest: 56dcca6971ea1cdd273f4efd084d4c066f9d2319a474659fa71790476985429b
+    home: https://www.jenkins.io/
+    icon: https://get.jenkins.io/art/jenkins-logo/logo.svg
+    keywords:
+    - jenkins
+    - ci
+    - devops
+    maintainers:
+    - email: maor.friedman@redhat.com
+      name: maorfr
+    - email: mail@torstenwalter.de
+      name: torstenwalter
+    - email: garridomota@gmail.com
+      name: mogaal
+    - email: wmcdona89@gmail.com
+      name: wmcdona89
+    - email: timjacomb1@gmail.com
+      name: timja
+    name: jenkins
+    sources:
+    - https://github.com/jenkinsci/jenkins
+    - https://github.com/jenkinsci/docker-inbound-agent
+    - https://github.com/maorfr/kube-tasks
+    - https://github.com/jenkinsci/configuration-as-code-plugin
+    type: application
+    urls:
+    - jenkins-5.7.14.tgz
+    version: 5.7.14
+  meeting-service:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.877203148-07:00"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: 0.1.0
+    description: A Helm chart for meetingteam meeting service
+    digest: b217d933b085e1df946da04a359f9b0facdea108796715f126f3cd3996e43703
+    name: meeting-service
+    type: application
+    urls:
+    - meeting-service-0.1.0.tgz
+    version: 0.1.0
+  mongodb:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.877533122-07:00"
+    description: A custom MongoDB Helm chart for Kubernetes
+    digest: f1ffdbc3b8d029c9dd6f6f6d9e2d93b493a67f1057f3cdeaa2de102be38a88c7
+    name: mongodb
+    type: application
+    urls:
+    - mongodb-0.1.0.tgz
+    version: 0.1.0
+  mysql:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.877806101-07:00"
+    description: A MySQL Helm chart for Kubernetes
+    digest: 178fa0dde740a06a107c28e59ce3b797e5424f331eae2bfa06b684bb6557ec0c
+    name: mysql
+    type: application
+    urls:
+    - mysql-0.1.0.tgz
+    version: 0.1.0
+  rabbitmq:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.878128461-07:00"
+    description: A Helm chart for rabbitmq broker
+    digest: a18d7f6d0d0566daaa04ee0c7f45e851956e21c931f5d921dbefa8071ee99df3
+    name: rabbitmq
+    type: application
+    urls:
+    - rabbitmq-0.1.0.tgz
+    version: 0.1.0
+  team-service:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.878736624-07:00"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: 0.1.0
+    description: A Helm chart for meetingteam team service
+    digest: 1bc3747286a73f4ac9b25634b722b22417c841a469f090a63b243a86d748bb8d
+    name: team-service
+    type: application
+    urls:
+    - team-service-0.1.0.tgz
+    version: 0.1.0
+  user-service:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.88109201-07:00"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: 0.1.0
+    description: A Helm chart for meetingteam user service
+    digest: b627e84157da6dbcaed32a264c99b1bfd3c07e12020e0da36aa0f38ef687de0e
+    name: user-service
+    type: application
+    urls:
+    - user-service-0.1.0.tgz
+    version: 0.1.0
+  vault:
+  - annotations:
+      charts.openshift.io/name: HashiCorp Vault
+    apiVersion: v2
+    appVersion: 1.18.1
+    created: "2025-04-26T09:09:36.884375075-07:00"
+    description: Official HashiCorp Vault Chart
+    digest: 7cd637f514b5f1fad5136b98499554ddcef615e2bf464fd021c521bfe0203172
+    home: https://www.vaultproject.io
+    icon: https://github.com/hashicorp/vault/raw/f22d202cde2018f9455dec755118a9b84586e082/Vault_PrimaryLogo_Black.png
+    keywords:
+    - vault
+    - security
+    - encryption
+    - secrets
+    - management
+    - automation
+    - infrastructure
+    kubeVersion: '>= 1.20.0-0'
+    name: vault
+    sources:
+    - https://github.com/hashicorp/vault
+    - https://github.com/hashicorp/vault-helm
+    - https://github.com/hashicorp/vault-k8s
+    - https://github.com/hashicorp/vault-csi-provider
+    urls:
+    - vault-0.29.1.tgz
+    version: 0.29.1
+  websocket-service:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-04-26T09:09:36.885017291-07:00"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: 0.1.0
+    description: A Helm chart for meetingteam websocket
+    digest: 2bd0f05a195b0bf6dc5261ed5edcfa87e642dd379914b9bfbd20c4829dbd8294
+    name: websocket-service
+    type: application
+    urls:
+    - websocket-service-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-04-26T09:09:36.851472793-07:00"
