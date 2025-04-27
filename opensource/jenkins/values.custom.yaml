@@ -8,17 +8,21 @@ controller:
     # Configuration as Code Plugin
     # SonarQube Scanner
     # Github Branch Source
-  # admin:
-  #   username: "admin"
-  #   password:
+    # AnsiColor
 
 persistence:
   enabled: true
   accessMode: "ReadWriteOnce"
-  storageClass: "gp2"
+  storageClass: "manual"
   size: "2Gi"
+  volumeName: jenkins-home-pv
 
 agent:
+  kubernetesConnectTimeout: 5
+  kubernetesReadTimeout: 15
+  retentionTimeout: 30
+  containerCap: 3 # Limit the numbers of launched agent pods
+  idleMinutes: 10 # Limit the time an agent pod runs to 10 minutes
   podTemplates:
     springboot: |
       - name: springboot
@@ -36,10 +40,12 @@ agent:
                   - infinity
                 tty: true
                 volumeMounts:
-                  - name: maven-repo
+                  - name: jenkins-cache
                     mountPath: /root/.m2
-                  - name: sonar-cache
+                    subPath: maven-repo
+                  - name: jenkins-cache
                     mountPath: /root/.sonar/cache
+                    subPath: sonar-cache
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
@@ -53,18 +59,13 @@ agent:
                   - infinity
                 tty: true
                 volumeMounts:
-                  - name: trivy-cache
+                  - name: jenkins-cache
                     mountPath: /root/.cache/trivy
+                    subPath: trivy-cache
             volumes:
-              - name: maven-repo
+              - name: jenkins-cache
                 persistentVolumeClaim:
-                  claimName: maven-pvc
-              - name: sonar-cache
-                persistentVolumeClaim:
-                  claimName: sonar-cache-pvc        
-              - name: trivy-cache
-                persistentVolumeClaim:
-                  claimName: trivy-cache-pvc     
+                  claimName: jenkins-agent-cache-pvc
     nodejs: |
       - name: nodejs
         namespace: jenkins
@@ -82,8 +83,9 @@ agent:
                   - infinity
                 tty: true
                 volumeMounts:
-                  - name: npm-cache
+                  - name: cache-volume
                     mountPath: /root/.npm
+                    subPath: npm-cache
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
@@ -96,6 +98,12 @@ agent:
                   - sleep
                   - infinity
                 tty: true
+                volumeMounts:
+                  - name: cache-volume
+                    mountPath: /root/.sonar/cache
+                    subPath: sonar-cache
+                securityContext:
+                  fsGroup: 1000
               - name: trivy
                 image: 'aquasec/trivy'
                 command:
@@ -103,15 +111,13 @@ agent:
                   - infinity
                 tty: true
                 volumeMounts:
-                  - name: trivy-cache
+                  - name: cache-volume
                     mountPath: /root/.cache/trivy
+                    subPath: trivy-cache
             volumes:
-              - name: npm-cache
+              - name: cache-volume
                 persistentVolumeClaim:
-                  claimName: npm-cache-pvc   
-              - name: trivy-cache
-                persistentVolumeClaim:
-                  claimName: trivy-cache-pvc  
+                  claimName: jenkins-agent-cache-pvc
     k6: |
       - name: k6
         namespace: jenkins
@@ -127,28 +133,29 @@ agent:
                 command:
                   - sleep
                   - infinity
+                tty: true
+    terraform:  |
+      - name: terraform
+        namespace: jenkins
+        label: jenkins-terraform
+        yaml: |
+          apiVersion: v1
+          kind: Pod
+          spec:
+            serviceAccountName: jenkins
+            containers:
+              - name: k6
+                image: 'hashicorp/terraform'
+                command:
+                  - sleep
+                  - infinity
                 tty: true     
 
 
-templateVpc:
-  enabled: true
-  storageClass: "gp2"
-  vpcs:
-    - name: maven-pvc
-      accessModes:
-        - ReadWriteOnce
-      storage: 1Gi
-    - name: npm-cache-pvc
-      accessModes:
-        - ReadWriteOnce
-      storage: 1Gi
-    - name: sonar-cache-pvc
-      accessModes:
-        - ReadWriteOnce
-      storage: 1Gi
-    - name: trivy-cache-pvc
-      accessModes:
-        - ReadWriteOnce
-      storage: 2Gi
-
-
+# cachePvcTemplates:
+#   - name: jenkins-agent-cache-pvc
+#     storageClass: "efs-sc"
+#     volumeName: 
+#     accessModes:
+#       - ReadWriteMany
+#     storage: 6Gi
