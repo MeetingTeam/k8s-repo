@@ -1,5 +1,5 @@
 image:
-  imageTag: latest
+  imageTag: 1.0-aed6903-3
 
 app:
   replicaCount: 1

@@ -17,6 +17,7 @@ app:
 
   podAnnotations:
     vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/agent-pre-populate-only: "true"
     vault.hashicorp.com/role: "team-service"
     vault.hashicorp.com/agent-inject-secret-team-service: "kv/data/team-service"
     vault.hashicorp.com/agent-inject-template-team-service: |

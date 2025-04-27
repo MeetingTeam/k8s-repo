@@ -14,6 +14,7 @@ app:
 
   podAnnotations:
     vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/agent-pre-populate-only: "true"
     vault.hashicorp.com/role: "websocket-service"
     vault.hashicorp.com/agent-inject-secret-user-service: "kv/data/websocket-service"
     vault.hashicorp.com/agent-inject-template-user-service: |
