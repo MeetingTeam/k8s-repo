@@ -25,6 +25,9 @@ spec:
   dataSource:
 {{ toYaml .Values.persistence.dataSource | indent 4 }}
 {{- end }}
+{{- if .Values.persistence.volumeName }}
+  volumeName: {{  .Values.persistence.volumeName }}
+{{- end }}
   accessModes:
     - {{ .Values.persistence.accessMode | quote }}
   resources:

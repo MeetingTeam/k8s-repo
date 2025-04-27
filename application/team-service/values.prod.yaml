@@ -6,6 +6,9 @@ job:
   image:
     jobImageTag: latest
 
+app:
+  replicaCount: 1
+
 rollout:
   enabled: true
   previewServiceEnabled: true

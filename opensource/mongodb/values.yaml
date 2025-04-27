@@ -31,14 +31,14 @@ env: {}
 pvc:
   enabled: true
   accessMode: ReadWriteOnce
-  storageClassName: standard
-  storage: 500Mi
+  storageClassName: gp2
+  storage: 2Gi
   pvName: mongodb-pv
   mountPath: /data/db
 
 service:
   type: ClusterIP
-  port: 3306
+  port: 27017
   additionalPorts: []
 
 ingress:
