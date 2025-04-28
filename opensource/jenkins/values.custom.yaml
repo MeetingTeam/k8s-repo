@@ -8,14 +8,19 @@ controller:
     # Configuration as Code Plugin
     # SonarQube Scanner
     # Github Branch Source
-    # AnsiColor
 
 persistence:
   enabled: true
-  accessMode: "ReadWriteOnce"
-  storageClass: "manual"
+  accessMode: ReadWriteOnce
+  storageClass: "gp2"
   size: "2Gi"
-  volumeName: jenkins-home-pv
+
+cachePvcTemplates:
+  - name: jenkins-agent-cache-pvc
+    storageClass: "efs-sc"
+    accessModes:
+      - ReadWriteMany
+    storage: 6Gi
 
 agent:
   kubernetesConnectTimeout: 5
@@ -149,13 +154,4 @@ agent:
                 command:
                   - sleep
                   - infinity
-                tty: true     
-
-
-# cachePvcTemplates:
-#   - name: jenkins-agent-cache-pvc
-#     storageClass: "efs-sc"
-#     volumeName: 
-#     accessModes:
-#       - ReadWriteMany
-#     storage: 6Gi
+                tty: true
