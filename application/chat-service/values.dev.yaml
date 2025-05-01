@@ -1,8 +1,8 @@
 image:
-  imageTag: 1.0-582fe16-1
+  imageTag: latest
 
 app:
-  replicaCount: 6
+  replicaCount: 1
 
 ingress:
   enabled: true

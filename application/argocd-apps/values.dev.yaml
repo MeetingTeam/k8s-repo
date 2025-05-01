@@ -8,6 +8,10 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
   - name: "team-service"
     namespace: "default"
     source:
@@ -17,6 +21,10 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
   - name: "chat-service"
     namespace: "default"
     source:
@@ -26,6 +34,10 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
   - name: "meeting-service"
     namespace: "default"
     source:
@@ -35,6 +47,10 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
   - name: "websocket-service"
     namespace: "default"
     source:
@@ -44,6 +60,10 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
   - name: "frontend-service"
     namespace: "default"
     source:
@@ -53,3 +73,7 @@ applications:
       valueFiles:
         - values.yaml
         - values.dev.yaml
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
