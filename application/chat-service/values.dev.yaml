@@ -2,7 +2,7 @@ image:
   imageTag: latest
 
 app:
-  replicaCount: 1
+  replicaCount: 9
 
 ingress:
   enabled: true
