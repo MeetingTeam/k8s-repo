@@ -149,7 +149,7 @@ agent:
           spec:
             serviceAccountName: jenkins
             containers:
-              - name: k6
+              - name: terraform
                 image: 'hashicorp/terraform'
                 command:
                   - sleep
