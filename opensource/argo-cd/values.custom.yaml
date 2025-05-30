@@ -1,3 +1,8 @@
+# controller:
+#   clusterRoleRules:
+#     enabled: true
+#     rules: 
+#       - 
 server: 
   service:
     type: NodePort
@@ -12,3 +17,9 @@ server:
     # paths:
     #   - /
     # pathType: Prefix
+
+dex:
+  enabled: false
+
+# configs:
+#     argocdServerAdminPassword: ""

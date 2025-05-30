@@ -7,6 +7,9 @@ appproject:
   description: "Project for meetingteam microservice"
   namespaces:
     - 'default'
+    - 'ingress-nginx'
+    - 'jenkins'
+    - 'vault'
 
 applications: []
 
