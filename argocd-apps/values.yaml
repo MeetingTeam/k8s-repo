@@ -10,6 +10,10 @@ appproject:
     - 'ingress-nginx'
     - 'jenkins'
     - 'vault'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
 
 applications: []
 
