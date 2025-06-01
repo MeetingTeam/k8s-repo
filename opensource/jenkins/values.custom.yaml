@@ -15,12 +15,12 @@ persistence:
   storageClass: "gp2"
   size: "2Gi"
 
-cachePvcTemplates:
-  - name: jenkins-agent-cache-pvc
-    storageClass: "efs-sc"
-    accessModes:
-      - ReadWriteMany
-    storage: 6Gi
+cachePvcTemplates: []
+  # - name: jenkins-agent-cache-pvc
+  #   storageClass: "efs-sc"
+  #   accessModes:
+  #     - ReadWriteMany
+  #   storage: 6Gi
 
 agent:
   kubernetesConnectTimeout: 5
