@@ -9,11 +9,3 @@ server:
     enabled: true
     size: 1Gi
     storageClass: "gp2"
-  # ingress:
-  #   enabled: true
-  #   ingressClassName: "nginx"
-  #   pathType: Prefix
-  #   activeService: true
-  #   hosts:
-  #     - host: vault.local
-  #       paths: []

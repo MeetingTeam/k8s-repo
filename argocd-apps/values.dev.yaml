@@ -1,4 +1,52 @@
 applications:
+  - name: "ingress-nginx"
+    namespace: "ingress-nginx"
+    source:
+      path: "opensource/ingress-nginx"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  - name: "argo-cd"
+    namespace: "argo"
+    source:
+      path: "opensource/argo-cd"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  - name: "vault"
+    namespace: "vault"
+    source:
+      path: "opensource/vault"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  - name: "jenkins"
+    namespace: "jenkins"
+    source:
+      path: "opensource/jenkins"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
   - name: "user-service"
     namespace: "default"
     source:
@@ -7,11 +55,18 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.dev.yaml
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
+        - values.main.yaml
+    syncPolicy: {}
+  - name: "user-service"
+    namespace: "default"
+    source:
+      path: "application/user-service"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.main.yaml
+    syncPolicy: {}
   - name: "team-service"
     namespace: "default"
     source:
@@ -20,11 +75,8 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.dev.yaml
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
+        - values.main.yaml
+    syncPolicy: {}
   - name: "chat-service"
     namespace: "default"
     source:
@@ -33,11 +85,8 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.dev.yaml
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
+        - values.main.yaml
+    syncPolicy: {}
   - name: "meeting-service"
     namespace: "default"
     source:
@@ -46,11 +95,8 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.dev.yaml
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
+        - values.main.yaml
+    syncPolicy: {}
   - name: "websocket-service"
     namespace: "default"
     source:
@@ -59,11 +105,8 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.dev.yaml
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
+        - values.main.yaml
+    syncPolicy: {}
   - name: "frontend-service"
     namespace: "default"
     source:
@@ -72,8 +115,5 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.dev.yaml
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
+        - values.main.yaml
+    syncPolicy: {}

@@ -1,4 +1,64 @@
 applications:
+  - name: "ingress-nginx"
+    namespace: "ingress-nginx"
+    source:
+      path: "opensource/ingress-nginx"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  - name: "argo-cd"
+    namespace: "argo"
+    source:
+      path: "opensource/argo-cd"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  - name: "argo-rollouts"
+    namespace: "argo"
+    source:
+      path: "opensource/argo-rollouts"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  - name: "vault"
+    namespace: "vault"
+    source:
+      path: "opensource/vault"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  - name: "rabbitmq"
+    namespace: "default"
+    source:
+      path: "opensource/rabbitmq"
+      targetRevision: "main"
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.custom.yaml
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
   - name: "user-service"
     namespace: "default"
     source:
