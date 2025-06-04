@@ -1,8 +1,3 @@
-# controller:
-#   clusterRoleRules:
-#     enabled: true
-#     rules: 
-#       - 
 server: 
   service:
     type: NodePort
