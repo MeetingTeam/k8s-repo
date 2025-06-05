@@ -3,7 +3,7 @@ applications:
     namespace: "ingress-nginx"
     source:
       path: "opensource/ingress-nginx"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -15,7 +15,7 @@ applications:
     namespace: "argo"
     source:
       path: "opensource/argo-rollouts"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -27,7 +27,7 @@ applications:
     namespace: "vault"
     source:
       path: "opensource/vault"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -39,7 +39,7 @@ applications:
     namespace: "default"
     source:
       path: "opensource/rabbitmq"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -49,7 +49,7 @@ applications:
     namespace: "default"
     source:
       path: "application/user-service"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -59,7 +59,7 @@ applications:
     namespace: "default"
     source:
       path: "application/team-service"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -69,7 +69,7 @@ applications:
     namespace: "default"
     source:
       path: "application/chat-service"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -79,7 +79,7 @@ applications:
     namespace: "default"
     source:
       path: "application/meeting-service"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -89,7 +89,7 @@ applications:
     namespace: "default"
     source:
       path: "application/websocket-service"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
@@ -99,7 +99,7 @@ applications:
     namespace: "default"
     source:
       path: "application/frontend-service"
-      targetRevision: "dev"
+      targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
