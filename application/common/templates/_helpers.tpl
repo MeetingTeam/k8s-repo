@@ -61,7 +61,7 @@ Create the name of the service account to use
 Create the name of the argo rollout preview service
 */}}
 {{- define "common.rolloutPreviewservice" -}}
-{{ include "common.name" . }}-preview
+preview-{{ include "common.name" . }}
 {{- end }}
 
 {{/*

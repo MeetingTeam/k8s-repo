@@ -111,7 +111,7 @@ spec:
     {{- if .Values.rollout.bluegreen }}
     blueGreen:
       activeService: {{ include "common.name" . }}
-      {{- if .Values.previewServiceEnabled }}
+      {{- if .Values.rollout.previewServiceEnabled }}
       previewService: {{ include "common.rolloutPreviewservice" . }}
       {{- end }}
       autoPromotionEnabled: {{ .Values.rollout.bluegreen.autoPromotionEnabled }}
