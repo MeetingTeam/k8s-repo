@@ -11,18 +11,6 @@ applications:
     syncPolicy:
       syncOptions:
         - CreateNamespace=true
-  - name: "argo-cd"
-    namespace: "argo"
-    source:
-      path: "opensource/argo-cd"
-      targetRevision: "main"
-    helm:
-      valueFiles:
-        - values.yaml
-        - values.custom.yaml
-    syncPolicy:
-      syncOptions:
-        - CreateNamespace=true
   - name: "vault"
     namespace: "vault"
     source:
@@ -47,15 +35,15 @@ applications:
     syncPolicy:
       syncOptions:
         - CreateNamespace=true
-  - name: "user-service"
+  - name: "rabbitmq"
     namespace: "default"
     source:
-      path: "application/user-service"
+      path: "opensource/rabbitmq"
       targetRevision: "main"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.custom.yaml
     syncPolicy: {}
   - name: "user-service"
     namespace: "default"
@@ -65,7 +53,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "team-service"
     namespace: "default"
@@ -75,7 +63,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "chat-service"
     namespace: "default"
@@ -85,7 +73,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "meeting-service"
     namespace: "default"
@@ -95,7 +83,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "websocket-service"
     namespace: "default"
@@ -105,7 +93,7 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "frontend-service"
     namespace: "default"
@@ -115,5 +103,5 @@ applications:
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}

@@ -1,4 +1,6 @@
 controller: 
+  image:
+    tag: jdk17
   serviceType: NodePort
   nodePort: 30808
   installPlugins: []

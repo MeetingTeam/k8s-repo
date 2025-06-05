@@ -11,18 +11,6 @@ applications:
     syncPolicy:
       syncOptions:
         - CreateNamespace=true
-  - name: "argo-cd"
-    namespace: "argo"
-    source:
-      path: "opensource/argo-cd"
-      targetRevision: "main"
-    helm:
-      valueFiles:
-        - values.yaml
-        - values.custom.yaml
-    syncPolicy:
-      syncOptions:
-        - CreateNamespace=true
   - name: "argo-rollouts"
     namespace: "argo"
     source:
@@ -56,9 +44,7 @@ applications:
       valueFiles:
         - values.yaml
         - values.custom.yaml
-    syncPolicy:
-      syncOptions:
-        - CreateNamespace=true
+    syncPolicy: {}
   - name: "user-service"
     namespace: "default"
     source:
