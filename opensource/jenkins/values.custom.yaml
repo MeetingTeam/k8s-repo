@@ -1,4 +1,6 @@
 controller: 
+  image:
+    tag: jdk17
   serviceType: NodePort
   nodePort: 30808
   installPlugins: []
@@ -67,6 +69,13 @@ agent:
                   - name: jenkins-cache
                     mountPath: /root/.cache/trivy
                     subPath: trivy-cache
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+              limits:
+                memory: "1Gi"
+                cpu: "400m"
             volumes:
               - name: jenkins-cache
                 persistentVolumeClaim:
@@ -119,6 +128,13 @@ agent:
                   - name: cache-volume
                     mountPath: /root/.cache/trivy
                     subPath: trivy-cache
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+              limits:
+                memory: "1Gi"
+                cpu: "400m"
             volumes:
               - name: cache-volume
                 persistentVolumeClaim:
@@ -139,6 +155,13 @@ agent:
                   - sleep
                   - infinity
                 tty: true
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+              limits:
+                memory: "512Mi"
+                cpu: "200m"
     terraform:  |
       - name: terraform
         namespace: jenkins
@@ -155,3 +178,10 @@ agent:
                   - sleep
                   - infinity
                 tty: true
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+              limits:
+                memory: "512Mi"
+                cpu: "200m"

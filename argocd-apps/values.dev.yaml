@@ -3,19 +3,7 @@ applications:
     namespace: "ingress-nginx"
     source:
       path: "opensource/ingress-nginx"
-      targetRevision: "main"
-    helm:
-      valueFiles:
-        - values.yaml
-        - values.custom.yaml
-    syncPolicy:
-      syncOptions:
-        - CreateNamespace=true
-  - name: "argo-cd"
-    namespace: "argo"
-    source:
-      path: "opensource/argo-cd"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -27,7 +15,7 @@ applications:
     namespace: "vault"
     source:
       path: "opensource/vault"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -39,7 +27,7 @@ applications:
     namespace: "jenkins"
     source:
       path: "opensource/jenkins"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -47,73 +35,73 @@ applications:
     syncPolicy:
       syncOptions:
         - CreateNamespace=true
-  - name: "user-service"
+  - name: "rabbitmq"
     namespace: "default"
     source:
-      path: "application/user-service"
-      targetRevision: "main"
+      path: "opensource/rabbitmq"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.custom.yaml
     syncPolicy: {}
   - name: "user-service"
     namespace: "default"
     source:
       path: "application/user-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "team-service"
     namespace: "default"
     source:
       path: "application/team-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "chat-service"
     namespace: "default"
     source:
       path: "application/chat-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "meeting-service"
     namespace: "default"
     source:
       path: "application/meeting-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "websocket-service"
     namespace: "default"
     source:
       path: "application/websocket-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}
   - name: "frontend-service"
     namespace: "default"
     source:
       path: "application/frontend-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
-        - values.main.yaml
+        - values.dev.yaml
     syncPolicy: {}

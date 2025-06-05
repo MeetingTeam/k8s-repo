@@ -3,19 +3,7 @@ applications:
     namespace: "ingress-nginx"
     source:
       path: "opensource/ingress-nginx"
-      targetRevision: "main"
-    helm:
-      valueFiles:
-        - values.yaml
-        - values.custom.yaml
-    syncPolicy:
-      syncOptions:
-        - CreateNamespace=true
-  - name: "argo-cd"
-    namespace: "argo"
-    source:
-      path: "opensource/argo-cd"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -27,7 +15,7 @@ applications:
     namespace: "argo"
     source:
       path: "opensource/argo-rollouts"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -39,7 +27,7 @@ applications:
     namespace: "vault"
     source:
       path: "opensource/vault"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -51,19 +39,17 @@ applications:
     namespace: "default"
     source:
       path: "opensource/rabbitmq"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
         - values.custom.yaml
-    syncPolicy:
-      syncOptions:
-        - CreateNamespace=true
+    syncPolicy: {}
   - name: "user-service"
     namespace: "default"
     source:
       path: "application/user-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -73,7 +59,7 @@ applications:
     namespace: "default"
     source:
       path: "application/team-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -83,7 +69,7 @@ applications:
     namespace: "default"
     source:
       path: "application/chat-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -93,7 +79,7 @@ applications:
     namespace: "default"
     source:
       path: "application/meeting-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -103,7 +89,7 @@ applications:
     namespace: "default"
     source:
       path: "application/websocket-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
@@ -113,7 +99,7 @@ applications:
     namespace: "default"
     source:
       path: "application/frontend-service"
-      targetRevision: "main"
+      targetRevision: "dev"
     helm:
       valueFiles:
         - values.yaml
