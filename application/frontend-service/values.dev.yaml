@@ -1,5 +1,5 @@
 image:
-  imageTag: 1.0-0830319-9
+  imageTag: 1.0-c572f59-10
 
 app:
   replicaCount: 1
