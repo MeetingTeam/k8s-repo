@@ -10,6 +10,7 @@ controller:
     # Configuration as Code Plugin
     # SonarQube Scanner
     # Github Branch Source
+    # Generic Webhook Trigger
 
 persistence:
   enabled: true
