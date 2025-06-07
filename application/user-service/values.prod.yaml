@@ -1,5 +1,5 @@
 image:
-  imageTag: 1.0-aed6903-3
+  imageTag: latest
 
 job:
   enabled: false
