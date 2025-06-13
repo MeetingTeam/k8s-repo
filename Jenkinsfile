@@ -94,7 +94,7 @@ spec:
   serviceAccountName: jenkins
   containers:
   - name: kubectl-helm
-    image: alpine/k8s:1.24.0
+    image: lachlanevenson/k8s-helm:latest
     command:
     - sleep
     - infinity
@@ -278,10 +278,10 @@ spec:
             cleanWs()
         }
         success {
-            echo "✅ Deployment successful for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
+            echo "Deployment successful for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
         }
         failure {
-            echo "❌ Deployment failed for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
+            echo "Deployment failed for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
         }
     }
 }
