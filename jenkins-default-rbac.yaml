@@ -1,18 +1,58 @@
+# ServiceAccount của Jenkins (nằm trong namespace jenkins)
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: jenkins
-  namespace: jenkins # 
+  namespace: jenkins
 ---
+# ClusterRole: cấp quyền full cluster-admin để đơn giản hóa
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jenkins-cluster-admin
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+- nonResourceURLs: ["*"]
+  verbs: ["*"]
+---
+# ClusterRoleBinding: gán ClusterRole cho ServiceAccount jenkins@jenkins
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: jenkins-binding
+  name: jenkins-cluster-admin-binding
 subjects:
 - kind: ServiceAccount
   name: jenkins
-  namespace: jenkins # 
+  namespace: jenkins
 roleRef:
   kind: ClusterRole
-  name: cluster-admin # hoặc tạo ClusterRole ít quyền hơn nếu muốn kiểm soát
+  name: jenkins-cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+# Role cho namespace default (backup cho specific operations)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: jenkins-deployer
+  namespace: default
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# RoleBinding cho namespace default
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-deployer-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: jenkins
+  namespace: jenkins
+roleRef:
+  kind: Role
+  name: jenkins-deployer
   apiGroup: rbac.authorization.k8s.io
