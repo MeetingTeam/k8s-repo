@@ -1,3 +1,88 @@
+// Định nghĩa cấu hình cho các services ứng dụng
+// Hàm này trả về một map các cấu hình dựa trên môi trường
+def getAppServiceConfigs(String environment) {
+    return [
+        "user-service": [
+            chartPath: "application/user-service",
+            helmReleaseNameSuffix: "-${environment}",
+            valueFiles: ["values.yaml", "values.${environment}.yaml"],
+            namespace: environment,
+            imageMutable: true,
+            createNamespace: true
+        ],
+        "team-service": [
+            chartPath: "application/team-service",
+            helmReleaseNameSuffix: "-${environment}",
+            valueFiles: ["values.yaml", "values.${environment}.yaml"],
+            namespace: environment,
+            imageMutable: true,
+            createNamespace: true
+        ],
+        "chat-service": [
+            chartPath: "application/chat-service",
+            helmReleaseNameSuffix: "-${environment}",
+            valueFiles: ["values.yaml", "values.${environment}.yaml"],
+            namespace: environment,
+            imageMutable: true,
+            createNamespace: true
+        ],
+        "meeting-service": [
+            chartPath: "application/meeting-service",
+            helmReleaseNameSuffix: "-${environment}",
+            valueFiles: ["values.yaml", "values.${environment}.yaml"],
+            namespace: environment,
+            imageMutable: true,
+            createNamespace: true
+        ],
+        "websocket-service": [
+            chartPath: "application/websocket-service",
+            helmReleaseNameSuffix: "-${environment}",
+            valueFiles: ["values.yaml", "values.${environment}.yaml"],
+            namespace: environment,
+            imageMutable: true,
+            createNamespace: true
+        ],
+        "frontend-service": [
+            chartPath: "application/frontend-service",
+            helmReleaseNameSuffix: "-${environment}",
+            valueFiles: ["values.yaml", "values.${environment}.yaml"],
+            namespace: environment,
+            imageMutable: true,
+            createNamespace: true
+        ]
+    ]
+}
+
+// Đổi tên hàm deployService thành deployAppService để rõ ràng hơn
+def deployAppService(String serviceName, String environment, String imageTag, Map config) {
+    echo "Đang triển khai dịch vụ ứng dụng ${serviceName} vào môi trường ${environment} sử dụng chart tại ./${config.chartPath}"
+    
+    // Kiểm tra chart có tồn tại không
+    if (!fileExists("./application/${serviceName}/Chart.yaml")) {
+        error("Chart for ${serviceName} not found at ./application/${serviceName}/")
+    }
+    
+    // Tạo namespace
+    sh "kubectl create namespace ${environment} --dry-run=client -o yaml | kubectl apply -f -"
+    
+    // Deploy service
+    sh """
+        helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \\
+            --namespace ${environment} \\
+            --values ./application/${serviceName}/values.yaml \\
+            --values ./application/${serviceName}/values.${environment}.yaml \\
+            --set image.imageTag=${imageTag} \\
+            --wait \\
+            --timeout=600s
+    """
+    
+    // Verify deployment
+    sh """
+        kubectl rollout status deployment/${serviceName} -n ${environment} --timeout=300s
+        kubectl get pods -n ${environment} -l app.kubernetes.io/name=${serviceName}
+    """
+}
+
 pipeline {
     agent {
         kubernetes {
@@ -27,62 +112,6 @@ spec:
     environment {
         AWS_REGION = 'ap-southeast-1'
         EKS_CLUSTER_NAME = 'doan-cluster-dev' // Cập nhật tên cluster của bạn
-        
-    }
-
-    // Định nghĩa cấu hình cho các services ứng dụng
-    // Hàm này trả về một map các cấu hình dựa trên môi trường
-    def getAppServiceConfigs(String environment) {
-        return [
-            "user-service": [
-                chartPath: "application/user-service",
-                helmReleaseNameSuffix: "-${environment}",
-                valueFiles: ["values.yaml", "values.${environment}.yaml"],
-                namespace: environment,
-                imageMutable: true,
-                createNamespace: true
-            ],
-            "team-service": [
-                chartPath: "application/team-service",
-                helmReleaseNameSuffix: "-${environment}",
-                valueFiles: ["values.yaml", "values.${environment}.yaml"],
-                namespace: environment,
-                imageMutable: true,
-                createNamespace: true
-            ],
-            "chat-service": [
-                chartPath: "application/chat-service",
-                helmReleaseNameSuffix: "-${environment}",
-                valueFiles: ["values.yaml", "values.${environment}.yaml"],
-                namespace: environment,
-                imageMutable: true,
-                createNamespace: true
-            ],
-            "meeting-service": [
-                chartPath: "application/meeting-service",
-                helmReleaseNameSuffix: "-${environment}",
-                valueFiles: ["values.yaml", "values.${environment}.yaml"],
-                namespace: environment,
-                imageMutable: true,
-                createNamespace: true
-            ],
-            "websocket-service": [
-                chartPath: "application/websocket-service",
-                helmReleaseNameSuffix: "-${environment}",
-                valueFiles: ["values.yaml", "values.${environment}.yaml"],
-                namespace: environment,
-                imageMutable: true,
-                createNamespace: true
-            ],
-            "frontend-service": [
-                chartPath: "application/frontend-service",
-                helmReleaseNameSuffix: "-${environment}",
-                valueFiles: ["values.yaml", "values.${environment}.yaml"],
-                namespace: environment,
-                imageMutable: true,
-                createNamespace: true
-            ]
-        ]
     }
     
     parameters {
@@ -120,9 +149,10 @@ spec:
         stage('Verify Chart Files') {
             steps {
                 container('kubectl-helm') {
-                    sh '''
+                    script {
                         echo "Verifying application service chart directories based on configurations..."
                         def appServiceConfigs = getAppServiceConfigs(params.ENVIRONMENT)
+                        
                         // Xác định services cần kiểm tra
                         def servicesToCheck = []
                         if (params.SERVICE == 'all') {
@@ -140,14 +170,17 @@ spec:
                         servicesToCheck.each { serviceName ->
                             def config = appServiceConfigs[serviceName]
                             echo "Checking chart for application service ${serviceName} at ./${config.chartPath}"
-                            if [ -f "./${config.chartPath}/Chart.yaml" ]; then
+                            
+                            // Using Groovy file check instead of bash
+                            if (fileExists("./${config.chartPath}/Chart.yaml")) {
                                 echo "✓ Chart.yaml found for ${serviceName}"
-                            else
+                            } else {
                                 echo "✗ Chart.yaml NOT found for ${serviceName} at ./${config.chartPath}/Chart.yaml"
-                                // error("Chart not found for ${serviceName}") // Bỏ comment nếu muốn dừng pipeline
-                            fi
+                                // Uncomment the line below if you want to fail the pipeline when chart is not found
+                                // error("Chart not found for ${serviceName}")
+                            }
                         }
-                    '''
+                    }
                 }
             }
         }
@@ -165,9 +198,6 @@ spec:
                 }
             }
         }
-        
-        // Gỡ bỏ stage 'Deploy Common Resources' vì hạ tầng sẽ được triển khai riêng
-        // stage('Deploy Common Resources') { ... }
         
         stage('Deploy Application Services') {
             steps {
@@ -254,34 +284,4 @@ spec:
             echo "❌ Deployment failed for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
         }
     }
-}
-
-// Đổi tên hàm deployService thành deployAppService để rõ ràng hơn
-def deployAppService(String serviceName, String environment, String imageTag, Map config) {
-    echo "Đang triển khai dịch vụ ứng dụng ${serviceName} vào môi trường ${environment} sử dụng chart tại ./${config.chartPath}"
-    
-    // Kiểm tra chart có tồn tại không
-    if (!fileExists("./application/${serviceName}/Chart.yaml")) {
-        error("Chart for ${serviceName} not found at ./application/${serviceName}/")
-    }
-    
-    // Tạo namespace
-    sh "kubectl create namespace ${environment} --dry-run=client -o yaml | kubectl apply -f -"
-    
-    // Deploy service
-    sh """
-        helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \
-            --namespace ${environment} \
-            --values ./application/${serviceName}/values.yaml \
-            --values ./application/${serviceName}/values.${environment}.yaml \
-            --set image.imageTag=${imageTag} \
-            --wait \
-            --timeout=600s
-    """
-    
-    // Verify deployment
-    sh """
-        kubectl rollout status deployment/${serviceName} -n ${environment} --timeout=300s
-        kubectl get pods -n ${environment} -l app.kubernetes.io/name=${serviceName}
-    """
 }
