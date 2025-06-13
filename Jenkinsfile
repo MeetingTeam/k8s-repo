@@ -191,14 +191,22 @@ spec:
                 echo "Configuring AWS CLI and EKS cluster..."
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                     sh '''
-                        # Install required packages for Alpine Linux
-                        apk update && apk add --no-cache tar gzip git curl
+                        # Install AWS CLI v2 for Alpine Linux
+                        apk update && apk add --no-cache curl unzip
                         
-                        # Configure AWS
+                        # Download and install AWS CLI v2
+                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                        unzip awscliv2.zip
+                        ./aws/install
+                        
+                        # Verify AWS CLI installation
+                        aws --version
+                        
+                        # Configure AWS and EKS
                         aws configure set region ${AWS_REGION}
                         aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
                         
-                        # Verify tools are available (kubectl and helm should already be in the image)
+                        # Verify tools
                         kubectl version --client
                         helm version
                         
