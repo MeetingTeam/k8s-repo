@@ -6,7 +6,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/user-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: environment,
+            namespace: default,
             imageMutable: true,
             createNamespace: true
         ],
@@ -14,7 +14,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/team-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: environment,
+            namespace: default,
             imageMutable: true,
             createNamespace: true
         ],
@@ -22,7 +22,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/chat-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: environment,
+            namespace: default,
             imageMutable: true,
             createNamespace: true
         ],
@@ -30,7 +30,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/meeting-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: environment,
+            namespace: default,
             imageMutable: true,
             createNamespace: true
         ],
@@ -38,7 +38,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/websocket-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: environment,
+            namespace: default,
             imageMutable: true,
             createNamespace: true
         ],
@@ -46,7 +46,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/frontend-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: environment,
+            namespace: default,
             imageMutable: true,
             createNamespace: true
         ]
@@ -62,13 +62,12 @@ def deployAppService(String serviceName, String environment, String imageTag, Ma
         error("Chart for ${serviceName} not found at ./application/${serviceName}/")
     }
     
-    // Tạo namespace
-    sh "kubectl create namespace ${environment} --dry-run=client -o yaml | kubectl apply -f -"
+    // Remove namespace creation line
     
     // Deploy service
     sh """
         helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \\
-            --namespace ${environment} \\
+            --namespace ${config.namespace} \\
             --values ./application/${serviceName}/values.yaml \\
             --values ./application/${serviceName}/values.${environment}.yaml \\
             --set image.imageTag=${imageTag} \\
@@ -78,8 +77,8 @@ def deployAppService(String serviceName, String environment, String imageTag, Ma
     
     // Verify deployment
     sh """
-        kubectl rollout status deployment/${serviceName} -n ${environment} --timeout=300s
-        kubectl get pods -n ${environment} -l app.kubernetes.io/name=${serviceName}
+        kubectl rollout status deployment/${serviceName} -n ${config.namespace} --timeout=300s
+        kubectl get pods -n ${config.namespace} -l app.kubernetes.io/name=${serviceName}
     """
 }
 
