@@ -191,10 +191,23 @@ stage('Configure Kubernetes') {
                 echo "Configuring Kubernetes access..."
                 withCredentials([string(credentialsId: 'k8s-token', variable: 'K8S_TOKEN')]) {
                     sh '''
+                        # Set explicit EKS API URL
+                        EKS_API_URL="https://60D987A0858DD749C546465804F98DE2.gr7.ap-southeast-1.eks.amazonaws.com"
+                        
+                        # Configure kubectl with explicit cluster URL
+                        kubectl config set-cluster eks-cluster --server=${EKS_API_URL} --insecure-skip-tls-verify=true
+                        
                         # Configure kubectl to use token authentication
                         echo "${K8S_TOKEN}" > /tmp/k8s_token
                         kubectl config set-credentials token-user --token=$(cat /tmp/k8s_token)
-                        kubectl config set-context --current --user=token-user
+                        
+                        # Set context to use the explicit cluster and user
+                        kubectl config set-context eks-context --cluster=eks-cluster --user=token-user
+                        
+                        # Use the new context
+                        kubectl config use-context eks-context
+                        
+                        # Clean up token file
                         rm /tmp/k8s_token
                         
                         # Verify tools
