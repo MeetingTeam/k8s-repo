@@ -297,15 +297,19 @@ stage('Configure Kubernetes') {
         }
     }
     
-    post {
-        always {
-            cleanWs()
-        }
-        success {
-            echo "Deployment successful for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
-        }
-        failure {
-            echo "Deployment failed for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
+   post {
+    always {
+        node('jenkins-cd') {  // Use the same label as your agent
+            container('kubectl-helm-aws') {
+                cleanWs()
+            }
         }
     }
+    success {
+        echo "Deployment successful for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
+    }
+    failure {
+        echo "Deployment failed for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
+    }
+}
 }
