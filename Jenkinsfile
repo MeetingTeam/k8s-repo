@@ -184,20 +184,16 @@ spec:
             }
         }
         
-       stage('Configure AWS & EKS') {
+  stage('Configure AWS & EKS') {
     steps {
         container('kubectl-helm-aws') {
             script {
                 echo "Configuring AWS CLI and EKS cluster..."
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                     sh '''
-                        # Install AWS CLI v2 for Alpine Linux
-                        apk update && apk add --no-cache curl unzip
-                        
-                        # Download and install AWS CLI v2
-                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                        unzip awscliv2.zip
-                        ./aws/install
+                        # Install AWS CLI v1 via pip (simpler and more reliable)
+                        apk update && apk add --no-cache python3 py3-pip
+                        pip3 install awscli
                         
                         # Verify AWS CLI installation
                         aws --version
