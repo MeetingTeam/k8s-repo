@@ -188,7 +188,10 @@ spec:
             script {
                 echo "Configuring AWS CLI and EKS cluster..."
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
-                   sh '''
+                  sh '''
+    # Install required packages
+    yum install -y tar gzip git
+    
     aws configure set region ${AWS_REGION}
     aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
     
