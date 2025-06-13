@@ -85,6 +85,7 @@ pipeline {
     agent {
         kubernetes {
             label 'jenkins-cd'
+            namespace 'jenkins'
             yaml """
 apiVersion: v1
 kind: Pod
