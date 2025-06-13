@@ -83,17 +83,18 @@ def deployAppService(String serviceName, String environment, String imageTag, Ma
 // ...existing code...
 pipeline {
     agent {
-        kubernetes {
-            label 'jenkins-cd'
-            namespace 'jenkins'
-            yaml """
+    kubernetes {
+        label 'jenkins-cd'
+        namespace 'jenkins'
+        yaml """
 apiVersion: v1
 kind: Pod
 spec:
   serviceAccountName: jenkins
+  automountServiceAccountToken: true
   containers:
   - name: kubectl-helm-aws
-    image: amazon/aws-cli:latest
+    image: dtzar/helm-kubectl:latest 
     command:
     - sleep
     - infinity
@@ -102,7 +103,8 @@ spec:
     - name: HOME
       value: /home/jenkins
     securityContext:
-      runAsUser: 0
+      runAsUser: 1000
+      runAsGroup: 1000
 """
         }
     }
@@ -190,25 +192,19 @@ spec:
                 echo "Configuring AWS CLI and EKS cluster..."
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                   sh '''
-    # Install required packages
-    yum install -y tar gzip git
+    # Debug thông tin
+    env | grep AWS
     
-    aws configure set region ${AWS_REGION}
-    aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME} 
+    # Cập nhật kubeconfig với --role-arn flag
+    aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME} --alias ${EKS_CLUSTER_NAME}
     
-    # Install kubectl
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    chmod +x kubectl
-    mv kubectl /usr/local/bin/
+    # Kiểm tra xác thực
+    kubectl config view --minify
+    kubectl auth can-i list secrets --namespace default
     
-    # Install Helm without checksum verification
-    VERIFY_CHECKSUM=false curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-    chmod 700 get_helm.sh
-    VERIFY_CHECKSUM=false ./get_helm.sh
-    
-    # Verify
+    # Kiểm tra kết nối
     kubectl cluster-info
-    helm version
+    helm version --short
 '''
                 }
             }
