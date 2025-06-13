@@ -189,7 +189,7 @@ spec:
                         if (servicesToDeploy.isEmpty()) {
                             echo "Không có dịch vụ ứng dụng nào được chọn hoặc cấu hình để triển khai."
                         } else {
-                            servicesToDeploy.each { serviceName =>
+                            servicesToDeploy.each { serviceName ->
                                 def serviceConfig = appServiceConfigs[serviceName]
                                 if (serviceConfig) {
                                     deployAppService(serviceName, params.ENVIRONMENT, params.IMAGE_TAG, serviceConfig)
@@ -220,7 +220,7 @@ spec:
                         if (servicesToCheck.isEmpty()) {
                             echo "Không có dịch vụ ứng dụng nào được chọn hoặc cấu hình để xác minh."
                         } else {
-                            servicesToCheck.each { serviceName =>
+                            servicesToCheck.each { serviceName ->
                                 def serviceConfig = appServiceConfigs[serviceName]
                                 if (serviceConfig) {
                                     sh """
@@ -233,7 +233,7 @@ spec:
                             echo "Kiểm tra Helm releases cho các dịch vụ ứng dụng:"
                             // Liệt kê releases trong các namespace đã dùng cho app services
                             def namespacesUsed = (appServiceConfigs.values().collect { it.namespace } as Set).unique()
-                            namespacesUsed.each { ns =>
+                            namespacesUsed.each { ns ->
                                 sh "echo --- Releases in namespace ${ns} ---; helm list -n ${ns}"
                             }
                         }
