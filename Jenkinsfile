@@ -79,11 +79,13 @@ def deployAppService(String serviceName, String environment, String imageTag, Ma
     """
 }
 
+// filepath: d:\k8s-repo\Jenkinsfile
+// ...existing code...
 pipeline {
     agent {
-    kubernetes {
-        label 'jenkins-cd'
-        yaml """
+        kubernetes {
+            label 'jenkins-cd'
+            yaml """
 apiVersion: v1
 kind: Pod
 spec:
@@ -98,9 +100,11 @@ spec:
     env:
     - name: HOME
       value: /home/jenkins
+    securityContext:
+      runAsUser: 0
 """
+        }
     }
-}
     
     environment {
         AWS_REGION = 'ap-southeast-1'
