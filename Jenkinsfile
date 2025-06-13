@@ -94,7 +94,7 @@ spec:
   serviceAccountName: jenkins
   containers:
   - name: kubectl-helm-aws
-    image: dtzar/helm-kubectl:latest
+    image: amazon/aws-cli:latest
     command:
     - sleep
     - infinity
@@ -182,27 +182,26 @@ spec:
             }
         }
         
-        stage('Configure AWS & EKS') {
-            steps {
-                container('kubectl-helm-aws') {
-                    script {
-                        echo "Configuring AWS CLI and EKS cluster..."
-                         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
-                    }
-   
-        sh '''
-            aws configure set region ${AWS_REGION}
-            aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
-            # Install kubectl
-            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            chmod +x kubectl
-            mv kubectl /usr/local/bin/
-            kubectl cluster-info
-        '''
-    }
-}
+       stage('Configure AWS & EKS') {
+    steps {
+        container('kubectl-helm-aws') {
+            script {
+                echo "Configuring AWS CLI and EKS cluster..."
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+                    sh '''
+                        aws configure set region ${AWS_REGION}
+                        aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
+                        # Install kubectl
+                        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                        chmod +x kubectl
+                        mv kubectl /usr/local/bin/
+                        kubectl cluster-info
+                    '''
+                }
             }
         }
+    }
+}
         
         stage('Deploy Application Services') {
             steps {
