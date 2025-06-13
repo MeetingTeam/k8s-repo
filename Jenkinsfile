@@ -54,23 +54,19 @@ def getAppServiceConfigs(String environment) {
 }
 
 def deployAppService(String serviceName, String environment, String imageTag, Map config) {
-    echo "Đang triển khai dịch vụ ứng dụng ${serviceName} vào môi trường ${environment} sử dụng chart tại ./${config.chartPath}"
-    
-    // Kiểm tra chart có tồn tại không
-    if (!fileExists("./application/${serviceName}/Chart.yaml")) {
-        error("Chart for ${serviceName} not found at ./application/${serviceName}/")
-    }
-    
-    // Deploy service - FIX THE VALUES FILE PATH
+    // ...
     sh """
         helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \\
             --namespace ${config.namespace} \\
             --values ./application/${serviceName}/values.yaml \\
-            --values ./application/${serviceName}/values-${environment}.yaml \\
+            --values ./application/${serviceName}/values.${environment}.yaml \\
             --set image.imageTag=${imageTag} \\
+            --storage-driver=configmaps \\  # Add this line
             --wait \\
             --timeout=600s
     """
+    // ...
+
     
     // Verify deployment
     sh """

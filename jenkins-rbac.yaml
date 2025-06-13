@@ -1,12 +1,25 @@
+# jenkins-default-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: Role
 metadata:
-  name: jenkins-cluster-admin
+  namespace: default
+  name: secret-reader
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get","list","watch","create","update","patch","delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-secret-reader
+  namespace: default
 subjects:
 - kind: ServiceAccount
   name: jenkins
-  namespace: jenkins  # Change this to the namespace where Jenkins is deployed
+  namespace: jenkins  # Replace with your actual Jenkins namespace if different
 roleRef:
-  kind: ClusterRole
-  name: cluster-admin  # This is a built-in role with full cluster access
+  kind: Role
+  name: secret-reader
   apiGroup: rbac.authorization.k8s.io
