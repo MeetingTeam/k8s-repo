@@ -190,7 +190,7 @@ spec:
     yum install -y tar gzip git
     
     aws configure set region ${AWS_REGION}
-    aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
+    aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME} --role-arn arn:aws:iam::160885253955:role/cluster-eks-role
     
     # Install kubectl
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
