@@ -26,8 +26,8 @@ spec:
     
     environment {
         AWS_REGION = 'ap-southeast-1'
-        EKS_CLUSTER_NAME = 'your-cluster-name' // Cập nhật tên cluster của bạn
-        // HELM_CHART_PATH không còn cần thiết ở đây nếu mỗi service có path riêng
+        EKS_CLUSTER_NAME = 'doan-cluster-dev' // Cập nhật tên cluster của bạn
+        
     }
 
     // Định nghĩa cấu hình cho các services ứng dụng
