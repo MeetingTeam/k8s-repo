@@ -62,21 +62,21 @@ def deployAppService(String serviceName, String environment, String imageTag, Ma
     }
     
     // Deploy service (đã loại bỏ HELM_DRIVER=configmaps)
-    sh '''
-        helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \
-            --namespace ${config.namespace} \
-            --values ./application/${serviceName}/values.yaml \
-            --values ./application/${serviceName}/values.${environment}.yaml \
-            --set image.imageTag=${imageTag} \
-            --wait \
+    sh """
+        helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \\
+            --namespace ${config.namespace} \\
+            --values ./application/${serviceName}/values.yaml \\
+            --values ./application/${serviceName}/values.${environment}.yaml \\
+            --set image.imageTag=${imageTag} \\
+            --wait \\
             --timeout=600s
-    '''
+    """
     
     // Verify deployment
-    sh '''
+    sh """
         kubectl rollout status deployment/${serviceName} -n ${config.namespace} --timeout=300s
         kubectl get pods -n ${config.namespace} -l app.kubernetes.io/name=${serviceName}
-    '''
+    """
 }
 
 pipeline {
