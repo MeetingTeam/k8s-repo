@@ -187,15 +187,19 @@ spec:
         
         stage('Configure AWS & EKS') {
             steps {
-                container('kubectl-helm') {
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
-                        sh '''
-                            aws configure set region ${AWS_REGION}
-                            aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
-                            kubectl cluster-info
-                        '''
-                    }
-                }
+                container('aws-cli') {
+    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+        sh '''
+            aws configure set region ${AWS_REGION}
+            aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
+            # Install kubectl
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            mv kubectl /usr/local/bin/
+            kubectl cluster-info
+        '''
+    }
+}
             }
         }
         
