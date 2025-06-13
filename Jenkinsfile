@@ -85,29 +85,26 @@ def deployAppService(String serviceName, String environment, String imageTag, Ma
 
 pipeline {
     agent {
-        kubernetes {
-            label 'jenkins-cd'
-            yaml """
+    kubernetes {
+        label 'jenkins-cd'
+        yaml """
 apiVersion: v1
 kind: Pod
 spec:
   serviceAccountName: jenkins
   containers:
-  - name: kubectl-helm
-    image: lachlanevenson/k8s-helm:latest
+  - name: kubectl-helm-aws
+    image: dtzar/helm-kubectl:latest
     command:
     - sleep
     - infinity
     tty: true
-  - name: aws-cli
-    image: amazon/aws-cli:latest
-    command:
-    - sleep 
-    - infinity
-    tty: true
+    env:
+    - name: HOME
+      value: /home/jenkins
 """
-        }
     }
+}
     
     environment {
         AWS_REGION = 'ap-southeast-1'
@@ -148,7 +145,7 @@ spec:
         
         stage('Verify Chart Files') {
             steps {
-                container('kubectl-helm') {
+                container('kubectl-helm-aws') {
                     script {
                         echo "Verifying application service chart directories based on configurations..."
                         def appServiceConfigs = getAppServiceConfigs(params.ENVIRONMENT)
@@ -187,8 +184,12 @@ spec:
         
         stage('Configure AWS & EKS') {
             steps {
-                container('aws-cli') {
-    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+                container('kubectl-helm-aws') {
+                    script {
+                        echo "Configuring AWS CLI and EKS cluster..."
+                         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+                    }
+   
         sh '''
             aws configure set region ${AWS_REGION}
             aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
@@ -205,7 +206,7 @@ spec:
         
         stage('Deploy Application Services') {
             steps {
-                container('kubectl-helm') {
+                container('kubectl-helm-aws') {
                     script {
                         def servicesToDeploy = []
                         def appServiceConfigs = getAppServiceConfigs(params.ENVIRONMENT)
@@ -239,7 +240,7 @@ spec:
         
         stage('Verify Deployment') {
             steps {
-                container('kubectl-helm') {
+                container('kubectl-helm-aws') {
                     script {
                         def appServiceConfigs = getAppServiceConfigs(params.ENVIRONMENT)
                         def servicesToCheck = []
