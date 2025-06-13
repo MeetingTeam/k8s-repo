@@ -187,7 +187,7 @@ spec:
         
         stage('Configure AWS & EKS') {
             steps {
-                container('aws-cli') {
+                container('kubectl-helm') {
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                         sh '''
                             aws configure set region ${AWS_REGION}
