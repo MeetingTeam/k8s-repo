@@ -53,7 +53,6 @@ def getAppServiceConfigs(String environment) {
     ]
 }
 
-// Đổi tên hàm deployService thành deployAppService để rõ ràng hơn
 def deployAppService(String serviceName, String environment, String imageTag, Map config) {
     echo "Đang triển khai dịch vụ ứng dụng ${serviceName} vào môi trường ${environment} sử dụng chart tại ./${config.chartPath}"
     
@@ -62,14 +61,12 @@ def deployAppService(String serviceName, String environment, String imageTag, Ma
         error("Chart for ${serviceName} not found at ./application/${serviceName}/")
     }
     
-    // Remove namespace creation line
-    
-    // Deploy service
+    // Deploy service - FIX THE VALUES FILE PATH
     sh """
         helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \\
             --namespace ${config.namespace} \\
             --values ./application/${serviceName}/values.yaml \\
-            --values ./application/${serviceName}/values.${environment}.yaml \\
+            --values ./application/${serviceName}/values-${environment}.yaml \\
             --set image.imageTag=${imageTag} \\
             --wait \\
             --timeout=600s
