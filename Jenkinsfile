@@ -184,16 +184,15 @@ spec:
             }
         }
         
-  stage('Configure AWS & EKS') {
+stage('Configure AWS & EKS') {
     steps {
         container('kubectl-helm-aws') {
             script {
                 echo "Configuring AWS CLI and EKS cluster..."
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                     sh '''
-                        # Install AWS CLI v1 via pip (simpler and more reliable)
-                        apk update && apk add --no-cache python3 py3-pip
-                        pip3 install awscli
+                        # Install AWS CLI using system package manager
+                        apk update && apk add --no-cache aws-cli
                         
                         # Verify AWS CLI installation
                         aws --version
