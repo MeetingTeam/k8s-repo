@@ -299,11 +299,8 @@ stage('Configure Kubernetes') {
     
    post {
     always {
-        node('jenkins-cd') {  // Use the same label as your agent
-            container('kubectl-helm-aws') {
-                cleanWs()
-            }
-        }
+        echo "Pipeline completed, skipping explicit workspace cleanup"
+        // Let Jenkins handle workspace cleanup automatically
     }
     success {
         echo "Deployment successful for ${params.SERVICE} in ${params.ENVIRONMENT} environment"
