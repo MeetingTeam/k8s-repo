@@ -93,7 +93,7 @@ spec:
   automountServiceAccountToken: true
   containers:
   - name: kubectl-helm-aws
-    image: dtzar/helm-kubectl:latest  // Image đã có kubectl & helm
+    image: dtzar/helm-kubectl:latest  
     command:
     - sleep
     - infinity
