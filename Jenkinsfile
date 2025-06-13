@@ -184,22 +184,18 @@ spec:
             }
         }
         
-stage('Configure AWS & EKS') {
+stage('Configure Kubernetes') {
     steps {
         container('kubectl-helm-aws') {
             script {
-                echo "Configuring AWS CLI and EKS cluster..."
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+                echo "Configuring Kubernetes access..."
+                withCredentials([string(credentialsId: 'k8s-token', variable: 'K8S_TOKEN')]) {
                     sh '''
-                        # Install AWS CLI using system package manager
-                        apk update && apk add --no-cache aws-cli
-                        
-                        # Verify AWS CLI installation
-                        aws --version
-                        
-                        # Configure AWS and EKS
-                        aws configure set region ${AWS_REGION}
-                        aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
+                        # Configure kubectl to use token authentication
+                        echo "${K8S_TOKEN}" > /tmp/k8s_token
+                        kubectl config set-credentials token-user --token=$(cat /tmp/k8s_token)
+                        kubectl config set-context --current --user=token-user
+                        rm /tmp/k8s_token
                         
                         # Verify tools
                         kubectl version --client
