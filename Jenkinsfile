@@ -102,8 +102,8 @@ spec:
     - name: HOME
       value: /home/jenkins
     securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
+      runAsUser: 0
+      runAsGroup: 0
 """
         }
     }
