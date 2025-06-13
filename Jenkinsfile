@@ -6,7 +6,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/user-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: default,
+            namespace: "default",
             imageMutable: true,
             createNamespace: true
         ],
@@ -14,7 +14,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/team-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: default,
+            namespace: "default",
             imageMutable: true,
             createNamespace: true
         ],
@@ -22,7 +22,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/chat-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: default,
+            namespace: "default",
             imageMutable: true,
             createNamespace: true
         ],
@@ -30,7 +30,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/meeting-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: default,
+            namespace: "default",
             imageMutable: true,
             createNamespace: true
         ],
@@ -38,7 +38,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/websocket-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: default,
+            namespace: "default",
             imageMutable: true,
             createNamespace: true
         ],
@@ -46,7 +46,7 @@ def getAppServiceConfigs(String environment) {
             chartPath: "application/frontend-service",
             helmReleaseNameSuffix: "-${environment}",
             valueFiles: ["values.yaml", "values.${environment}.yaml"],
-            namespace: default,
+            namespace: "default",
             imageMutable: true,
             createNamespace: true
         ]
