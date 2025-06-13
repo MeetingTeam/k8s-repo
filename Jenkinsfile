@@ -53,40 +53,31 @@ def getAppServiceConfigs(String environment) {
     ]
 }
 
-   def deployAppService(String serviceName, String environment, String imageTag, Map config) {
-        echo "Đang triển khai dịch vụ ứng dụng ${serviceName} vào môi trường ${environment} sử dụng chart tại ./${config.chartPath}"
-
-        // Kiểm tra chart có tồn tại không
-        if (!fileExists("./application/${serviceName}/Chart.yaml")) {
-            error("Chart for ${serviceName} not found at ./application/${serviceName}/")
-        }
-
-        // Deploy service
-        sh """
-            # Ensure Helm uses the pod's service account token by removing the kubeconfig
-            # file that might have been configured by 'aws eks update-kubeconfig'.
-            # The HOME env var for the container is /home/jenkins.
-            rm -f /home/jenkins/.kube/config
-
-            helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \\
-                --namespace ${config.namespace} \\
-                --values ./application/${serviceName}/values.yaml \\
-                --values ./application/${serviceName}/values.${environment}.yaml \\
-                --set image.imageTag=${imageTag} \\
-                --wait \\
-                --timeout=600s
-        """
-
-        // Verify deployment
-        sh """
-            # Ensure kubectl also uses the pod's service account token.
-            rm -f /home/jenkins/.kube/config
-
-            kubectl rollout status deployment/${serviceName} -n ${config.namespace} --timeout=300s
-            kubectl get pods -n ${config.namespace} -l app.kubernetes.io/name=${serviceName}
-        """
+def deployAppService(String serviceName, String environment, String imageTag, Map config) {
+    echo "Đang triển khai dịch vụ ứng dụng ${serviceName} vào môi trường ${environment} sử dụng chart tại ./${config.chartPath}"
+    
+    // Kiểm tra chart có tồn tại không
+    if (!fileExists("./application/${serviceName}/Chart.yaml")) {
+        error("Chart for ${serviceName} not found at ./application/${serviceName}/")
     }
-    ```
+    
+    // Deploy service (đã loại bỏ HELM_DRIVER=configmaps)
+    sh """
+        helm upgrade --install ${serviceName}-${environment} ./application/${serviceName} \\
+            --namespace ${config.namespace} \\
+            --values ./application/${serviceName}/values.yaml \\
+            --values ./application/${serviceName}/values.${environment}.yaml \\
+            --set image.imageTag=${imageTag} \\
+            --wait \\
+            --timeout=600s
+    """
+    
+    // Verify deployment
+    sh """
+        kubectl rollout status deployment/${serviceName} -n ${config.namespace} --timeout=300s
+        kubectl get pods -n ${config.namespace} -l app.kubernetes.io/name=${serviceName}
+    """
+}
 
 // filepath: d:\k8s-repo\Jenkinsfile
 // ...existing code...
