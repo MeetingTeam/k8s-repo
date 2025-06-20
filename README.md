@@ -34,4 +34,8 @@ helm install <release-name> <repo-name>/<tài nguyên cần cài> -f values.cust
 ```
 Ví dụ: helm install jenkins devops/jenkins -f values.custom.yaml
 
+## Link video demo
+
+https://drive.google.com/drive/folders/1ufqcXqbBNcJwYTu0LcCNv-TOVuCb_Fm9?usp=drive_link
+
 
