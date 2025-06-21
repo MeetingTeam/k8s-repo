@@ -2,7 +2,7 @@ image:
   imageTag: latest
 
 job:
-  enabled: false
+  enabled: true
   image:
     jobImageTag: latest
 
