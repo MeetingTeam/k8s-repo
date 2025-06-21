@@ -54,12 +54,26 @@ agent:
                   - name: jenkins-cache
                     mountPath: /root/.sonar/cache
                     subPath: sonar-cache
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
                   - sleep
                   - infinity
                 tty: true
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
               - name: trivy
                 image: 'aquasec/trivy'
                 command:
@@ -70,6 +84,13 @@ agent:
                   - name: jenkins-cache
                     mountPath: /root/.cache/trivy
                     subPath: trivy-cache
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
             volumes:
               - name: jenkins-cache
                 persistentVolumeClaim:
@@ -94,12 +115,26 @@ agent:
                   - name: cache-volume
                     mountPath: /root/.npm
                     subPath: npm-cache
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
                   - sleep
                   - infinity
                 tty: true
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
               - name: sonar
                 image: 'sonarsource/sonar-scanner-cli'
                 command:
@@ -112,6 +147,13 @@ agent:
                     subPath: sonar-cache
                 securityContext:
                   fsGroup: 1000
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
               - name: trivy
                 image: 'aquasec/trivy'
                 command:
@@ -122,6 +164,13 @@ agent:
                   - name: cache-volume
                     mountPath: /root/.cache/trivy
                     subPath: trivy-cache
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
             volumes:
               - name: cache-volume
                 persistentVolumeClaim:
@@ -142,6 +191,13 @@ agent:
                   - sleep
                   - infinity
                 tty: true
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
     terraform:  |
       - name: terraform
         namespace: jenkins
@@ -158,3 +214,10 @@ agent:
                   - sleep
                   - infinity
                 tty: true
+                resources:
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+                  limits:
+                    cpu: "500m"
+                    memory: "1536Mi"
