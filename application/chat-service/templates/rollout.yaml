@@ -1,1 +1,1 @@
-{{- template "common.rollout" . -}}
+{{- include "common.rollout" . -}}

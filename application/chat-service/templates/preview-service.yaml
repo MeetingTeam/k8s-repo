@@ -1,1 +1,1 @@
-{{- template "common.previewService" . -}}
+{{- include "common.previewService" . -}}

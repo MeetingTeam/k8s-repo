@@ -1,8 +1,36 @@
 image:
-  imageTag: latest
+  imageTag: test
+  pullPolicy: Never
 
 app:
   replicaCount: 1
+
+  securityContext:
+    capabilities:
+      add:
+        - NET_ADMIN
+
+  env:
+    - name: CONFIG_PATH
+      value: /vault/secrets/application.properties
+    - name: OTEL_SERVICE_NAME
+      value: team-service
+    - name: OTEL_METRICS_EXPORTER
+      value: none
+    - name: OTEL_LOGS_EXPORTER
+      value: none
+    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+      value: "http://otel-collector-ingestor.otel.svc.cluster.local:4317"
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: grpc
+
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
 
 job:
   enabled: true

@@ -1,6 +1,6 @@
 image:
   repository: "mysql"
-  tag: "latest"
+  tag: "8.0"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -25,21 +25,12 @@ configmap:
 
 secret:
   enabled: false
-  # data:
-  #   DB_USER:  cm9vdA==
-  #   DB_PASS:  a29iaWV0LjEyMwo=
 
 env:
-  # - name: MYSQL_DATABASE
-  #   valueFrom:
-  #     configMapKeyRef:
-  #       name: mysql
-  #       key: DB_DATABASE
-  # - name: MYSQL_ROOT_PASSWORD
-  #   valueFrom:
-  #     secretKeyRef:
-  #       name: mysql
-  #       key: DB_PASS
+  - name: MYSQL_DATABASE
+    value: "userdb"
+  - name: MYSQL_ROOT_PASSWORD
+    value: "kobiet.123"
 
 pvc:
   enabled: true
