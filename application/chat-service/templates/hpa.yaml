@@ -1,1 +1,1 @@
-{{- template "common.hpa" . -}}
+{{- include "common.hpa" . -}}

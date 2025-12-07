@@ -1,1 +1,1 @@
-{{- template "common.deployment" . -}}
+{{- include "common.deployment" . -}}

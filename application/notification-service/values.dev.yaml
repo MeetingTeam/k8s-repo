@@ -3,13 +3,13 @@ image:
   pullPolicy: Never
 
 app:
-  replicaCount: 0
+  replicaCount: 1
 
   env:
     - name: CONFIG_PATH
       value: /vault/secrets/application.properties
     - name: OTEL_SERVICE_NAME
-      value: websocket-service
+      value: notification-service
     - name: OTEL_METRICS_EXPORTER
       value: none
     - name: OTEL_LOGS_EXPORTER
@@ -36,6 +36,6 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - paths:
-        - path: "/websocket-service/(?!.*/private/).*"
+        - path: "/notification-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
   tls: []

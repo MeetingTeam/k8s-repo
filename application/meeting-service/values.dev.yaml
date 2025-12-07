@@ -1,8 +1,31 @@
 image:
-  imageTag: 1.0-a59cbc8-8
+  imageTag: test
+  pullPolicy: Never
 
 app:
   replicaCount: 1
+
+  env:
+    - name: CONFIG_PATH
+      value: /vault/secrets/application.properties
+    - name: OTEL_SERVICE_NAME
+      value: meeting-service
+    - name: OTEL_METRICS_EXPORTER
+      value: none
+    - name: OTEL_LOGS_EXPORTER
+      value: none
+    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+      value: "http://otel-collector-ingestor.otel.svc.cluster.local:4317"
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: grpc
+
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
 
 ingress:
   enabled: true

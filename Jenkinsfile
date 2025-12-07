@@ -14,7 +14,7 @@ pipeline {
         string(
             name: 'SERVICES',
             defaultValue: '',
-            description: 'Choose one or multiple services to deploy. Services supported are: chat-service,meeting-service,team-service,user-service,websocket-service'
+            description: 'Choose one or multiple services to deploy. Services supported are: chat-service,meeting-service,team-service,user-service,websocket-service,frontend-service'
         )
     }
 
