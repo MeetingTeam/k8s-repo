@@ -1,6 +1,6 @@
 image:
   imageTag: test
-  pullPolicy: Never
+  pullPolicy: Always
 
 app:
   replicaCount: 0
@@ -38,4 +38,5 @@ ingress:
     - paths:
         - path: "/websocket-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
+
   tls: []
