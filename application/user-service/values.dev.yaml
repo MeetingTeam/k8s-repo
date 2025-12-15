@@ -1,6 +1,6 @@
 image:
   imageTag: test
-  pullPolicy: Never
+  pullPolicy: Always
 
 app:
   replicaCount: 1
@@ -31,7 +31,7 @@ job:
   enabled: true
   image:
     jobImageTag: test
-    pullPolicy: Never
+    pullPolicy: Always
 
 ingress:
   enabled: true
@@ -42,4 +42,5 @@ ingress:
     - paths:
         - path: "/user-service/.*"
           pathType: ImplementationSpecific
+
   tls: []
