@@ -1,6 +1,6 @@
 image:
   imageTag: test
-  pullPolicy: Never
+  pullPolicy: Always
 
 app:
   replicaCount: 1
@@ -46,4 +46,5 @@ ingress:
     - paths:
         - path: "/team-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
+
   tls: []
