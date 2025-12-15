@@ -1,6 +1,6 @@
 image:
   imageTag: test
-  pullPolicy: Never
+  pullPolicy: Always
 
 app:
   replicaCount: 1
@@ -36,4 +36,5 @@ ingress:
     - paths:
         - path: "/meeting-service/(?!.*/private/).*"
           pathType: ImplementationSpecific
+
   tls: []
