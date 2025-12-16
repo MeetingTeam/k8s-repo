@@ -33,7 +33,7 @@ env:
     value: "kobiet.123"
 
 pvc:
-  enabled: true
+  enabled: false
   accessMode: ReadWriteOnce
   storageClassName: standard
   storage: 500Mi
