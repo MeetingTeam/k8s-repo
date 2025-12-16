@@ -30,7 +30,7 @@ app:
 job:
   enabled: true
   image:
-    jobImageTag: test
+    jobImageTag: latest
     pullPolicy: Always
 
 ingress:
@@ -44,3 +44,4 @@ ingress:
           pathType: ImplementationSpecific
 
   tls: []
+
