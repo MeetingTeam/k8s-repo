@@ -44,7 +44,7 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - paths:
-        - path: "/team-service/(?!.*/private/).*"
+        - path: "/team-service/.*"
           pathType: ImplementationSpecific
 
   tls: []

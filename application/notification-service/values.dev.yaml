@@ -5,6 +5,11 @@ image:
 app:
   replicaCount: 1
 
+  securityContext:
+    capabilities:
+      add:
+        - NET_ADMIN
+
   env:
     - name: CONFIG_PATH
       value: /vault/secrets/application.properties
@@ -36,7 +41,7 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - paths:
-        - path: "/notification-service/(?!.*/private/).*"
+        - path: "/notification-service/.*"
           pathType: ImplementationSpecific
 
   tls: []

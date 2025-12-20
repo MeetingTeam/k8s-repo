@@ -1,5 +1,6 @@
 image:
   imageTag: 1.0-dbd7468-1
+  pullPolicy: Always
 
 app:
   replicaCount: 1

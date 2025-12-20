@@ -3,7 +3,12 @@ image:
   pullPolicy: Always
 
 app:
-  replicaCount: 0
+  replicaCount: 1
+
+  securityContext:
+    capabilities:
+      add:
+        - NET_ADMIN
 
   env:
     - name: CONFIG_PATH
@@ -36,7 +41,7 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:
     - paths:
-        - path: "/websocket-service/(?!.*/private/).*"
+        - path: "/websocket-service/.*"
           pathType: ImplementationSpecific
 
   tls: []
