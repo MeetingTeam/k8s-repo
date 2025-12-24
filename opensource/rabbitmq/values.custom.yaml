@@ -19,5 +19,4 @@ controller:
         - /bin/sh
         - -c
         - |
-          apk add --no-cache iproute2
-          sleep infinity
+          apk add --no-cache iproute2 && sleep infinity
