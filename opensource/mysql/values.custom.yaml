@@ -1,0 +1,10 @@
+controller:
+  extraContainers:
+    - name: tc-sidecar
+      image: alpine:3.20
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+            - NET_ADMIN
