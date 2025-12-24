@@ -1,5 +1,5 @@
 image:
-  repository: "asdads6495/rabbitmq"
+  repository: "rabbitmq"
   tag: latest
   pullPolicy: IfNotPresent
   pullSecrets: []
