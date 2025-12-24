@@ -21,8 +21,6 @@ controller:
         - -c
         - |
           apk add --no-cache iproute2
-          tc qdisc add dev eth0 root netem delay 100ms
-          sleep infinity
 
 config:
   enable-opentelemetry: "true"
@@ -38,3 +36,4 @@ config:
   otel-sampler: "AlwaysOn"   # Also: AlwaysOff, TraceIdRatioBased
   otel-sampler-ratio: "1.0"
   otel-sampler-parent-based: "false"
+
