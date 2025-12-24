@@ -6,22 +6,8 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     nodePorts:
       http: "30080"
-config:
-    enable-opentelemetry: "true"
-    # opentelemetry-config: "/etc/ingress-controller/telemetry/opentelemetry.toml"
-    opentelemetry-operation-name: "HTTP $request_method $service_name $uri"
-    opentelemetry-trust-incoming-span: "true"
-    otlp-collector-host: "otel-collector-ingestor.otel.svc.cluster.local"
-    otlp-collector-port: "4317"
-    otel-max-queuesize: "2048"
-    otel-schedule-delay-millis: "5000"
-    otel-max-export-batch-size: "512"
-    otel-service-name: "nginx-proxy"
-    otel-sampler: "AlwaysOn" # Also: AlwaysOff, TraceIdRatioBased
-    otel-sampler-ratio: "1.0"
 
-    otel-sampler-parent-based: "false"
- extraContainers:
+  extraContainers:
     - name: tc-sidecar
       image: alpine:3.20
       imagePullPolicy: IfNotPresent
@@ -30,3 +16,25 @@ config:
         capabilities:
           add:
             - NET_ADMIN
+      command:
+        - /bin/sh
+        - -c
+        - |
+          apk add --no-cache iproute2
+          tc qdisc add dev eth0 root netem delay 100ms
+          sleep infinity
+
+config:
+  enable-opentelemetry: "true"
+  # opentelemetry-config: "/etc/ingress-controller/telemetry/opentelemetry.toml"
+  opentelemetry-operation-name: "HTTP $request_method $service_name $uri"
+  opentelemetry-trust-incoming-span: "true"
+  otlp-collector-host: "otel-collector-ingestor.otel.svc.cluster.local"
+  otlp-collector-port: "4317"
+  otel-max-queuesize: "2048"
+  otel-schedule-delay-millis: "5000"
+  otel-max-export-batch-size: "512"
+  otel-service-name: "nginx-proxy"
+  otel-sampler: "AlwaysOn"   # Also: AlwaysOff, TraceIdRatioBased
+  otel-sampler-ratio: "1.0"
+  otel-sampler-parent-based: "false"
