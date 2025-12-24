@@ -98,7 +98,6 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end}}
-        {{- include "rabbitmq.sidecarContainers" . | nindent 8 }}
       {{- with .Values.server.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
