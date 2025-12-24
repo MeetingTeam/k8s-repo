@@ -6,7 +6,7 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     nodePorts:
       http: "30080"
-  config:
+config:
     enable-opentelemetry: "true"
     # opentelemetry-config: "/etc/ingress-controller/telemetry/opentelemetry.toml"
     opentelemetry-operation-name: "HTTP $request_method $service_name $uri"
@@ -19,4 +19,14 @@ controller:
     otel-service-name: "nginx-proxy"
     otel-sampler: "AlwaysOn" # Also: AlwaysOff, TraceIdRatioBased
     otel-sampler-ratio: "1.0"
+
     otel-sampler-parent-based: "false"
+ extraContainers:
+    - name: tc-sidecar
+      image: alpine:3.20
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+            - NET_ADMIN
