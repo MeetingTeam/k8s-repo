@@ -1,5 +1,5 @@
 image:
-  repository: "asdads6495/mongo"
+  repository: "asdads6495/mongodb"
   tag: "latest"
   pullPolicy: IfNotPresent
 
