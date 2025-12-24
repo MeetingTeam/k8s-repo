@@ -11,6 +11,7 @@ controller:
       image: alpine:3.20
       imagePullPolicy: IfNotPresent
       securityContext:
+        runAsUser: 0
         privileged: true
         capabilities:
           add:
