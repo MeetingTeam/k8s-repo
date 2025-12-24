@@ -21,6 +21,7 @@ controller:
         - -c
         - |
           apk add --no-cache iproute2
+          sleep infinity
 
 config:
   enable-opentelemetry: "true"
