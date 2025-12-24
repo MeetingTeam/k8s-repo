@@ -1,6 +1,6 @@
 image:
-  repository: "mysql"
-  tag: "8.0"
+  repository: "asdads6495/mysql"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -18,7 +18,10 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext: 
+  capabilities:
+      add:
+        - NET_ADMIN
 
 configmap:
   enabled: false
