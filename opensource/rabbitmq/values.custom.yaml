@@ -5,3 +5,19 @@ server:
   env:
     - name: RABBITMQ_ERLANG_COOKIE
       value: "meetingteam"
+controller:
+  extraContainers:
+    - name: tc-sidecar
+      image: alpine:3.20
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+            - NET_ADMIN
+      command:
+        - /bin/sh
+        - -c
+        - |
+          apk add --no-cache iproute2
+          sleep infinity

@@ -1,5 +1,5 @@
 image:
-  repository: "asdads6495/rabbitmq"
+  repository: "rabbitmq"
   tag: latest
   pullPolicy: IfNotPresent
   pullSecrets: []
@@ -28,9 +28,7 @@ server:
     fsGroup: 999
     runAsUser: 999
     runAsGroup: 999
-    capabilities:
-      add:
-        - NET_ADMIN
+
 
   
   replicaCount: 1
