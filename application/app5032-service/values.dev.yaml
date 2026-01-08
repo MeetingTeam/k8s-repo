@@ -1,0 +1,32 @@
+image:
+  imageTag: latest
+  pullPolicy: Always
+
+app:
+  replicaCount: 1
+
+
+
+  env:
+    - name: OTEL_SERVICE_NAME
+      value: chat-service
+    - name: OTEL_METRICS_EXPORTER
+      value: none
+    - name: OTEL_LOGS_EXPORTER
+      value: none
+    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+      value: "http://otel-collector-ingestor.otel.svc.cluster.local:4317"
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: grpc
+    - name: OTEL_INSTRUMENTATION_SPRING_SCHEDULING_ENABLED
+      value: "false"
+
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+
+
