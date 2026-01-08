@@ -1,4 +1,6 @@
-
+image:
+  imageTag: latest
+  pullPolicy: Always
 
 app:
   replicaCount: 1
