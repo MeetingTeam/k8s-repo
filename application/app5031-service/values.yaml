@@ -1,5 +1,5 @@
 image:
-  repository: asdads6495/app503
+  repository: asdads6495/app5031
   tag: "latest"
   pullPolicy: Always
 
