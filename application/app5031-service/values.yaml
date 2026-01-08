@@ -1,0 +1,45 @@
+image:
+  repository: asdads6495/app503
+  tag: "latest"
+  pullPolicy: Always
+
+serviceAccount:
+  create: true
+
+pvc:
+  enabled: false
+
+app:
+  replicaCount: 1
+
+
+  
+  resources: {}
+
+  livenessProbe:
+    tcpSocket:
+      port: 5031
+    initialDelaySeconds: 5
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readinessProbe:
+    tcpSocket:
+      port: 5031
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+rollout:
+  enabled: false
+
+service:
+  type: ClusterIP
+  port: 5031
+
+ingress:
+  enabled: false
+
+autoscaling:
+  enabled: false
