@@ -1,6 +1,6 @@
 image:
-  imageTag: test
-  pullPolicy: Always
+  imageTag: app_bug_test
+  pullPolicy: IfNotPresent
 
 app:
   replicaCount: 1

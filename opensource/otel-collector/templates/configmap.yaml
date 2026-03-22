@@ -9,11 +9,7 @@ data:
     extensions:
       health_check:
         endpoint: "0.0.0.0:13133"
-    
-    processors:
-      batch:
-        {{- toYaml .Values.ingestor.otel_config.processors.batch | nindent 8 }}
-      
+
     receivers:
       otlp:
         protocols:
@@ -21,24 +17,17 @@ data:
             endpoint: 0.0.0.0:{{ .Values.ingestor.service.ports.grpc }}
           http:
             endpoint: 0.0.0.0:{{ .Values.ingestor.service.ports.http }}
-      
+
+    processors:
+      {{- toYaml .Values.ingestor.otel_config.processors | nindent 6 }}
+
     exporters:
-      loadbalancing:
-        protocol:
-          otlp:
-            timeout: 1s
-            tls:
-              insecure: true
-        resolver:
-          dns:
-            hostname: {{ include "otel-collector.aggregator.headlessServiceName" . }}.{{ .Release.Namespace }}.svc.cluster.local
-            port: '{{ .Values.aggregator.service.ports.grpc }}'
-            interval: 5s
+      {{- toYaml .Values.ingestor.otel_config.exporters | nindent 6 }}
 
     service:
       extensions: [health_check]
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [batch]
-          exporters: [loadbalancing]
+          processors: [{{ keys .Values.ingestor.otel_config.processors | join ", " }}]
+          exporters: [{{ keys .Values.ingestor.otel_config.exporters | join ", " }}]

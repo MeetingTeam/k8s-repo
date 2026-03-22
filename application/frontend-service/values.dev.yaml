@@ -5,6 +5,11 @@ image:
 app:
   replicaCount: 1
 
+  securityContext:
+    capabilities:
+      add:
+        - NET_ADMIN
+
 ingress:
   enabled: true
   className: "nginx"
