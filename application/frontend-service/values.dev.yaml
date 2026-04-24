@@ -5,6 +5,20 @@ image:
 app:
   replicaCount: 1
 
+  env:
+    - name: OTEL_SERVICE_NAME
+      value: frontend-service
+    - name: OTEL_RESOURCE_ATTRIBUTES
+      value: "app_id=k8s-repo-application"
+    - name: OTEL_METRICS_EXPORTER
+      value: none
+    - name: OTEL_LOGS_EXPORTER
+      value: otlp
+    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+      value: "http://otel-collector-ingestor.otel.svc.cluster.local:4317"
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: grpc
+
 ingress:
   enabled: true
   className: "nginx"
