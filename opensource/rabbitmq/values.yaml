@@ -28,6 +28,8 @@ server:
     fsGroup: 999
     runAsUser: 999
     runAsGroup: 999
+
+
   
   replicaCount: 1
 
@@ -74,4 +76,5 @@ ingress:
   #       - path: /
   #         pathType: ImplementationSpecific
   #         port: 15672
+
   # tls: []

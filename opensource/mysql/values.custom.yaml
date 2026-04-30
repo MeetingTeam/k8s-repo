@@ -1,0 +1,24 @@
+controller:
+  extraContainers:
+    - name: tc-sidecar
+      image: alpine:3.20
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+            - NET_ADMIN
+      command:
+        - /bin/sh
+        - -c
+        - |
+          apk add --no-cache iproute2
+          sleep infinity
+
+pvc:
+  enabled: true
+  accessMode: ReadWriteOnce
+  storageClassName: ebs-sc
+  storage: 1Gi
+  pvName: mysql-pv
+  mountPath: /var/lib/mysql

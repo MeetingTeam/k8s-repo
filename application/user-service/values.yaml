@@ -1,6 +1,6 @@
 image:
   repository: hungtran679/mt_user-service
-  tag: latest
+  imageTag: latest
   pullPolicy: Always
 
 serviceAccount:
@@ -52,7 +52,7 @@ job:
   
   image:
     repository: "hungtran679/mt_flyway_user-service"
-    tag: "latest"
+    jobImageTag: "latest"
     pullPolicy: Always
   
   annotations:

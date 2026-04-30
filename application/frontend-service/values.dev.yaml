@@ -1,5 +1,5 @@
 image:
-  imageTag: 1.0-dbd7468-1
+  imageTag: test
   pullPolicy: Always
 
 app:

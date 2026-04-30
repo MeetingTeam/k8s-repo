@@ -1,6 +1,6 @@
 image:
   repository: hungtran679/mt_meeting-service
-  tag: latest
+  imageTag: latest
   pullPolicy: Always
 
 imagePullSecrets: []

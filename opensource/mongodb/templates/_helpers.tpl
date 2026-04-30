@@ -67,3 +67,40 @@ Create the headless service name
 {{- define "mongodb.headlessServiceName" -}}
 {{ include "mongodb.name" . }}-headless
 {{- end }}
+
+{{/*
+Render sidecar containers
+*/}}
+{{- define "mongodb.sidecarContainers" -}}
+{{- if .Values.controller.extraContainers }}
+{{- range .Values.controller.extraContainers }}
+- name: {{ .name }}
+  image: {{ .image }}
+  imagePullPolicy: {{ .imagePullPolicy | default "IfNotPresent" }}
+  {{- with .command }}
+  command:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .args }}
+  args:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .env }}
+  env:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .securityContext }}
+  securityContext:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .resources }}
+  resources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .volumeMounts }}
+  volumeMounts:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
