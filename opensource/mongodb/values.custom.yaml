@@ -1,16 +1,25 @@
 controller:
-  extraContainers:
-    - name: tc-sidecar
-      image: alpine:3.20
-      imagePullPolicy: IfNotPresent
-      securityContext:
-        privileged: true
-        capabilities:
-          add:
-            - NET_ADMIN
-      command:
-        - /bin/sh
-        - -c
-        - |
-          apk add --no-cache iproute2
-          sleep infinity
+  extraContainers: {}
+  # extraContainers:
+  #   - name: tc-sidecar
+  #     image: alpine:3.20
+  #     imagePullPolicy: IfNotPresent
+  #     securityContext:
+  #       privileged: true
+  #       capabilities:
+  #         add:
+  #           - NET_ADMIN
+  #     command:
+  #       - /bin/sh
+  #       - -c
+  #       - |
+  #         apk add --no-cache iproute2
+  #         sleep infinity
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

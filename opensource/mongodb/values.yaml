@@ -35,7 +35,7 @@ pvc:
   enabled: true
   accessMode: ReadWriteOnce
   storageClassName: gp2
-  storage: 500Mi
+  storage: 2Gi
   pvName: mongodb-pv
   mountPath: /data/db
 

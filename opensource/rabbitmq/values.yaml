@@ -16,7 +16,7 @@ rbac:
 
 pvcData:
   accessModes: ["ReadWriteOnce"]
-  storage: 125Mi
+  storage: 1Gi
   storageClassName: ""
 
 server:
@@ -39,7 +39,13 @@ server:
 
   env: []
 
-  resources: {}
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
   readinessProbe:
     exec:
